@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kg.fx.lim.admin.view.HomePageController">
+   <children>
+      <Button layoutX="523.0" layoutY="21.0" mnemonicParsing="false" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="admin" textFill="#fbefdf">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Button>
+      <BarChart fx:id="bc" layoutX="34.0" layoutY="72.0" prefHeight="278.0" prefWidth="538.0" style="-fx-background-color: #fbefdf; -fx-background-radius: 5;" title="작일 매출 현황(점포별)">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
+      <AnchorPane layoutX="22.0" layoutY="398.0" prefHeight="170.0" prefWidth="274.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;">
+         <children>
+            <Label layoutX="14.0" layoutY="15.0" text="작일 매출 총액" textFill="#fbefdf">
+               <font>
+                  <Font name="Yj BUTGOT Light" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="246.0" layoutY="93.0" text="원" textFill="#fbefdf">
+               <font>
+                  <Font name="Yj BUTGOT Light" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="total" alignment="CENTER_RIGHT" editable="false" layoutX="25.0" layoutY="63.0" prefHeight="68.0" prefWidth="203.0" promptText="0" text="10,000,000">
+               <font>
+                  <Font name="Yj TEUNTEUN Bold" size="28.0" />
+               </font>
+            </TextField>
+         </children></AnchorPane>
+      <AnchorPane layoutX="308.0" layoutY="398.0" prefHeight="170.0" prefWidth="274.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;">
+         <children>
+            <Label layoutX="14.0" layoutY="15.0" text="작일 BEST ITEM" textFill="#fbefdf">
+               <font>
+                  <Font name="Yj BUTGOT Light" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="best" alignment="CENTER" editable="false" layoutX="25.0" layoutY="63.0" prefHeight="68.0" prefWidth="226.0" promptText="0" text="마리오카트 8">
+               <font>
+                  <Font name="Yj TEUNTEUN Bold" size="24.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

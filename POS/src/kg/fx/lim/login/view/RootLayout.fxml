@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #3d6c6f;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kg.fx.lim.login.view.LoginController">
+   <children>
+      <AnchorPane layoutX="33.0" layoutY="20.0" prefHeight="463.0" prefWidth="533.0" style="-fx-border-color: #d5d5d5;" />
+      <TextField fx:id="userNameField" layoutX="234.0" layoutY="222.0" prefHeight="38.0" prefWidth="190.0" promptText="Enter your Username" style="-fx-background-color: #3d6c6f; -fx-border-radius: 5; -fx-border-color: #ffffff; -fx-text-fill: #ffffff;">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </TextField>
+      <PasswordField fx:id="passWordField" layoutX="234.0" layoutY="295.0" prefHeight="38.0" prefWidth="190.0" promptText="Enter your Password" style="-fx-background-color: #3d6c6f; -fx-border-radius: 5; -fx-border-color: #ffffff; -fx-text-fill: #ffffff;">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </PasswordField>
+      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="170.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/user.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="170.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/lock.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="loginBtn" defaultButton="true" layoutX="209.0" layoutY="385.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="38.0" prefWidth="182.0" style="-fx-background-color: #bf3f27; -fx-border-radius: 5;" text="Login" textFill="WHITE">
+         <font>
+            <Font name="Arial Narrow Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fitHeight="61.0" fitWidth="60.0" layoutX="270.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/logo.png" />
+         </image></ImageView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="176.0" layoutY="136.0" prefHeight="38.0" prefWidth="258.0" text="Nintendo POS ver 1.0" textFill="#d5d5d5">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

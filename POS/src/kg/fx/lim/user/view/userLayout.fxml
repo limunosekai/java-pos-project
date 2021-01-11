@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #3d6c6f;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kg.fx.lim.user.view.PosController">
+   <children>
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../login/image/logo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="61.0" layoutY="14.0" prefHeight="40.0" prefWidth="142.0" text="Nintendo POS ver 1.0" textFill="#d5d5d5">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="userName" layoutX="625.0" layoutY="21.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="압구정점" textFill="#d5d5d5" wrapText="true">
+         <font>
+            <Font name="Yj BUTGOT Light" size="16.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <Button fx:id="logoutBtn" layoutX="709.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleLogoutBtn" style="-fx-background-color: #bf3f27;" text="Logout" textFill="#d5d5d5">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <AnchorPane layoutX="30.0" layoutY="74.0" prefHeight="438.0" prefWidth="529.0" style="-fx-background-color: #305457;">
+         <children>
+            <TableView fx:id="information" prefHeight="398.0" prefWidth="530.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn editable="false" prefWidth="28.000030517578125" text="번호" />
+                <TableColumn editable="false" prefWidth="166.39999389648438" text="상품명" />
+                  <TableColumn editable="false" prefWidth="31.20001220703125" text="수량" />
+                  <TableColumn editable="false" prefWidth="75.0" text="정상가" />
+                  <TableColumn editable="false" prefWidth="75.0" text="할인가" />
+                  <TableColumn editable="false" prefWidth="39.99993896484375" text="할인율" />
+                  <TableColumn editable="false" prefWidth="110.4000244140625" text="금액" />
+              </columns>
+            </TableView>
+            <Label layoutX="14.0" layoutY="410.0" text="총 판매 수량 : " textFill="#fbefdf">
+               <font>
+                  <Font name="Yj BUTGOT Light" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="253.0" layoutY="410.0" text="총 판매 금액 : " textFill="#fbefdf">
+               <font>
+                  <Font name="Yj BUTGOT Light" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="totalQuantity" alignment="CENTER_RIGHT" layoutX="128.0" layoutY="408.0" prefHeight="22.0" prefWidth="114.0" promptText="0">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="totalAmount" alignment="CENTER_RIGHT" layoutX="367.0" layoutY="408.0" prefHeight="22.0" prefWidth="150.0" promptText="0">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="12.0" />
+               </font>
+            </TextField>
+         </children></AnchorPane>
+      <AnchorPane layoutX="-4.0" layoutY="520.0" prefHeight="78.0" prefWidth="568.0">
+         <children>
+          <Button fx:id="initBtn" layoutX="34.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleInitBtn" prefHeight="40.0" prefWidth="166.0" style="-fx-background-color: #bf3f27;" text="초기화" textFill="#fbefdf">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Yj BUTGOT Light" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="salesBtn" layoutX="397.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleSalesBtn" prefHeight="40.0" prefWidth="166.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="판매관리" textFill="#fbefdf">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Yj BUTGOT Light" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="inventoryBtn" layoutX="217.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleInventoryBtn" prefHeight="40.0" prefWidth="166.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="재고관리" textFill="#fbefdf">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Yj BUTGOT Light" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <VBox layoutX="593.0" layoutY="74.0" prefHeight="528.0" prefWidth="190.0">
+         <children>
+            <TableView fx:id="price" prefHeight="328.0" prefWidth="190.0">
+              <columns>
+                <TableColumn editable="false" prefWidth="68.79998779296875" resizable="false" text="항목" />
+                <TableColumn editable="false" prefWidth="120.800048828125" resizable="false" text="금액" />
+              </columns>
+            </TableView>
+            <Button fx:id="addBtn" mnemonicParsing="false" onAction="#handleAddBtn" prefHeight="40.0" prefWidth="194.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="추    가" textFill="#fbefdf">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Yj BUTGOT Light" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="19.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#handleCancelBtn" prefHeight="40.0" prefWidth="191.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="취    소" textFill="#fbefdf">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Yj BUTGOT Light" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="19.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="payBtn" mnemonicParsing="false" onAction="#handlePayBtn" prefHeight="40.0" prefWidth="192.0" style="-fx-background-color: #bf3f27;" text="결    제" textFill="#fbefdf">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="Yj BUTGOT Light" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="19.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
