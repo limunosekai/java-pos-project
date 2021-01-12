@@ -19,10 +19,10 @@ import kg.fx.lim.MainApp;
 
 /**
  * ---------------------------------------------------------------------------
- * Nintendo POS 1.0 LoginController
- * 
+ * Nintendo POS 1.0 
+ * LoginController
  * @author 임성현
- *         ---------------------------------------------------------------------------
+ * ---------------------------------------------------------------------------
  */
 
 public class LoginController {
@@ -137,7 +137,7 @@ public class LoginController {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
-	
+
 	/**
 	 * ----------------------------------------userId 반환
 	 */
