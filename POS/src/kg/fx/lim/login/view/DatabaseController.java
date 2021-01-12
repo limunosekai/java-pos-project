@@ -2,7 +2,6 @@ package kg.fx.lim.login.view;
 
 import java.sql.*;
 import java.util.ArrayList;
-
 import kg.fx.lim.model.User;
 
 /**
@@ -110,7 +109,7 @@ public class DatabaseController {
 		ArrayList<String> userNames = new ArrayList<>();
 
 		try {
-			String sql = "SELECT * FROM user WHERE NOT user_id='admin'";
+			String sql = "SELECT user_name FROM user WHERE NOT user_id='admin';";
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 
@@ -149,5 +148,33 @@ public class DatabaseController {
 			try {if (conn != null) pstm.close();} catch(Exception e) {}
 		}
 		return result;
+	}
+
+	public ArrayList<User> loadAllUserList() {
+		ResultSet rs = null;
+		ArrayList<User> list = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM user WHERE NOT user_id='admin'";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				User user = new User();
+				user.setCode(rs.getInt("user_code"));
+				user.setName(rs.getString("user_name"));
+				user.setId(rs.getString("user_id"));
+				user.setPasswd(rs.getString("user_password"));
+				user.setTel(rs.getString("user_tel"));
+				user.setAddress(rs.getString("user_address"));
+				list.add(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+			try {if (pstm != null) pstm.close();} catch(Exception ex) {}
+			try {if (conn != null) conn.close();} catch(Exception ex) {}
+		}
+		return list;
 	}
 }

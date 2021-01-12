@@ -1,10 +1,13 @@
 package kg.fx.lim.user.view;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -27,7 +30,7 @@ import kg.fx.lim.MainApp;
 ---------------------------------------------------------------------------
 */
 
-public class PosController {
+public class PosController implements Initializable {
 	// -------------------------------------------멤버필드
 	@FXML
 	private Button logoutBtn;
@@ -181,5 +184,12 @@ public class PosController {
 	 */
 	public void setUserName(String id) {
 		userName.setText(id);
+	}
+	
+	/**
+	 * --------------------------------------------------초기화 : load 후 자동싷행
+	 */
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
 	}
 }

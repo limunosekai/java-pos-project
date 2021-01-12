@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import kg.fx.lim.MainApp;
+import kg.fx.lim.user.view.PosController;
 
 /**
  * ---------------------------------------------------------------------------
@@ -46,13 +47,6 @@ public class LoginController {
 
 	// 메소드
 	/**
-	 * ---------------------------------------초기화
-	 */
-	@FXML
-	public void initialize() {
-	}
-
-	/**
 	 * --------------------------------------로그인 버튼 클릭시
 	 */
 	@FXML
@@ -82,7 +76,7 @@ public class LoginController {
 
 		// DB에서 입력한 id에 맞는 password 가져오기
 		String DB_password = db.loadPassword(userId);
-
+		
 		// 기존 스테이지 가져오기
 		Stage primaryStage = (Stage) loginBtn.getScene().getWindow();
 		// password 검사
@@ -116,6 +110,13 @@ public class LoginController {
 					Stage userStage = new Stage();
 					userStage.setTitle(userId);
 					userStage.setResizable(false);
+					
+					// 이름 표시
+					DatabaseController db2 = new DatabaseController();
+					PosController controller = loader.getController();
+					String DB_userName = db2.loadUserName(userId);
+					controller.setUserName(DB_userName);
+					
 					userStage.setScene(scene);
 					userStage.show();
 					primaryStage.close();
