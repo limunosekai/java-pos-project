@@ -83,7 +83,7 @@ public class DatabaseController {
 		String userName = "";
 
 		try {
-			String sql = "SELECT user_name FROM user WHERE user_id=" + "'" + id + "'";
+			String sql = "SELECT user_name FROM user WHERE user_id=" + "'" + id + "';";
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 
@@ -132,7 +132,7 @@ public class DatabaseController {
 	public int saveUserData(User user) {
 		int result = 0;
 		try {
-			String sql = "INSERT INTO user VALUES(?,?,?,?,?,?)";
+			String sql = "INSERT INTO user VALUES(?,?,?,?,?,?);";
 			pstm = conn.prepareStatement(sql);
 			pstm.setInt(1,user.getCode());
 			pstm.setString(2,user.getName());
@@ -149,12 +149,59 @@ public class DatabaseController {
 		}
 		return result;
 	}
-
+	
+	/**
+	 * ----------------------------------------DB에 사용자 데이터 저장하기
+	 */
+	public int deleteUserData(User user) {
+		int result = 0;
+		try {
+			String sql = "DELETE FROM user WHERE user_code = ?;";
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1,user.getCode());
+			result = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {if (pstm != null) pstm.close();} catch(Exception e) {}
+			try {if (conn != null) pstm.close();} catch(Exception e) {}
+		}
+		return result;
+	}
+	
+	/**
+	 * ---------------------------------------- DB에 사용자 데이터 업데이트
+	 */
+	public int updateUserData(User user) {
+		int result = 0;
+		try {
+			String sql = "UPDATE user SET user_name = ?, user_id = ?, user_password = ?,"
+					+ "user_tel = ?, user_address = ? WHERE user_code = ?;";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1,user.getName());
+			pstm.setString(2,user.getId());
+			pstm.setString(3,user.getPasswd());
+			pstm.setString(4,user.getTel());
+			pstm.setString(5,user.getAddress());
+			pstm.setInt(6,user.getCode());
+			result = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {if (pstm != null) pstm.close();} catch(Exception e) {}
+			try {if (conn != null) pstm.close();} catch(Exception e) {}
+		}
+		return result;
+	}
+	
+	/**
+	 * ----------------------------------------DB에 사용자 리스트 가져오기
+	 */
 	public ArrayList<User> loadAllUserList() {
 		ResultSet rs = null;
 		ArrayList<User> list = new ArrayList<>();
 		try {
-			String sql = "SELECT * FROM user WHERE NOT user_id='admin'";
+			String sql = "SELECT * FROM user WHERE NOT user_id='admin';";
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 
@@ -176,5 +223,78 @@ public class DatabaseController {
 			try {if (conn != null) conn.close();} catch(Exception ex) {}
 		}
 		return list;
+	}
+	
+	/**
+	 * ---------------------------------------- id 중복 체크
+	 */
+	public boolean duplicateIdCheck(String id) {
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT user_id FROM user;";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getString("user_id").equals(id)) {
+					return true;
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+			try {if (pstm != null) pstm.close();} catch(Exception ex) {}
+		}
+		return false;
+	}
+	
+	/**
+	 * ---------------------------------------- update id 중복 체크
+	 */
+	public boolean duplicateIdCheckForUpdate(String inputId, String temp) {
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT user_id FROM user WHERE NOT user_id = ?;";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, temp);
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getString("user_id").equals(inputId)) {
+					return true;
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+			try {if (pstm != null) pstm.close();} catch(Exception ex) {}
+		}
+		return false;
+	}
+	
+	/**
+	 * ---------------------------------------- code 중복 체크
+	 */
+	public boolean duplicateCodeCheck(int code) {
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT user_code FROM user;";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getInt("user_code") == code) {
+					return true;
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+			try {if (pstm != null) pstm.close();} catch(Exception ex) {}
+		}
+		return false;
 	}
 }

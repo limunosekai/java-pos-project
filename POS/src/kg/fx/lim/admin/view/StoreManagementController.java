@@ -77,6 +77,9 @@ public class StoreManagementController implements Initializable {
 		
 		// Input 유효성 검사
 		if(isInputValid()) {
+			// 데이터베이스 컨트롤러 객체 생성
+			DatabaseController db = new DatabaseController();
+			
 			// 사용자가 입력한 값들 변수에 담기
 			int code = Integer.parseInt(StoreCode.getText());
 			String name = StoreName.getText();
@@ -85,39 +88,33 @@ public class StoreManagementController implements Initializable {
 			String tel = StoreTel.getText();
 			String address = StoreAddress.getText();
 			
-			// user 객체 생성
-			User user = new User();
-			user.setCode(code);
-			user.setName(name);
-			user.setId(id);
-			user.setPasswd(passwd);
-			user.setTel(tel);
-			user.setAddress(address);
-			
-			// 데이터베이스 컨트롤러 객체 생성
-			DatabaseController db = new DatabaseController();
-			
-			// DB에 저장
-			result = db.saveUserData(user);
-			
-			// DB 검사
-			if(result > 0) {
-				// 테이블뷰에 추가
-				data.add(user);
-				tv.setItems(data);
-				// 성공 메시지 출력
-				Alert ok = new Alert(AlertType.INFORMATION);
-				ok.setTitle("등록 성공");
-				ok.setHeaderText("등록 성공");
-				ok.setContentText("등록에 성공했습니다.");
-				ok.showAndWait();
+			// 중복 검사
+			if(!db.duplicateIdCheck(id) && !db.duplicateCodeCheck(code)) {
+				// user 객체 생성
+				User user = new User();
+				user.setCode(code);
+				user.setName(name);
+				user.setId(id);
+				user.setPasswd(passwd);
+				user.setTel(tel);
+				user.setAddress(address);
+					
+				// DB에 저장
+				result = db.saveUserData(user);
+				
+				// DB 검사
+				if(result > 0) {
+					// 테이블뷰에 추가
+					data.add(user);
+					tv.setItems(data);
+					// 성공 메시지 출력
+					alertOk("등록 성공", "등록에 성공했습니다.");
+				} else {
+					// 실패 메시지 출력
+					alertFail("등록 실패", "등록에 실패했습니다.\n관리자에게 문의해주세요.\n전산실 이승재");
+				}	
 			} else {
-				// 실패 메시지 출력
-				Alert fail = new Alert(AlertType.ERROR);
-				fail.setTitle("등록 실패");
-				fail.setHeaderText("등록 실패");
-				fail.setContentText("등록에 실패했습니다.\n관리자에게 문의해주세요.\n전산실 이승재");
-				fail.showAndWait();
+				alertFail("코드 또는 아이디 중복", "코드 또는 아이디가 중복됩니다.\n다시 입력해주세요");
 			}
 		} 
 		// 초기화
@@ -129,22 +126,56 @@ public class StoreManagementController implements Initializable {
 	 */
 	public void handleEditBtn(ActionEvent e) {
 		
-		// 사용자가 입력한 값들 변수에 담기
-		int code = Integer.parseInt(StoreCode.getText());
-		String name = StoreName.getText();
-		String id = StoreId.getText();
-		String passwd = StorePassword.getText();
-		String tel = StoreTel.getText();
-		String address = StoreAddress.getText();
-		
-		// user 객체 생성
-		User user = new User();
-		user.setCode(code);
-		user.setName(name);
-		user.setId(id);
-		user.setPasswd(passwd);
-		user.setTel(tel);
-		user.setAddress(address);
+		// Input 유효성 검사
+		if(isInputValid()) {
+			// 데이터베이스 컨트롤러 객체 생성
+			DatabaseController db = new DatabaseController();
+			
+			// 사용자가 입력한 값들 변수에 담기
+			int code = Integer.parseInt(StoreCode.getText());
+			String name = StoreName.getText();
+			String id = StoreId.getText();
+			String passwd = StorePassword.getText();
+			String tel = StoreTel.getText();
+			String address = StoreAddress.getText();
+			
+			// 수정 전 사용자의 id
+			int tempIndex = tv.getSelectionModel().getSelectedIndex();
+			User temp = data.get(tempIndex);
+			String tempId = temp.getId();
+			
+			// 중복 검사
+			if(!db.duplicateIdCheckForUpdate(id, tempId)) {
+				// user 객체 생성
+				User user = new User();
+				user.setCode(code);
+				user.setName(name);
+				user.setId(id);
+				user.setPasswd(passwd);
+				user.setTel(tel);
+				user.setAddress(address);
+				
+				// DB에 저장
+				result = db.updateUserData(user);
+				
+				// DB 검사
+				if(result > 0) {
+					// 테이블뷰에 추가
+					int index = tv.getSelectionModel().getSelectedIndex();
+					data.set(index, user);
+					tv.setItems(data);
+					// 성공 메시지 출력
+					alertOk("수정 성공", "수정에 성공했습니다.");
+				} else {
+					// 실패 메시지 출력
+					alertFail("수정 실패", "수정에 실패했습니다.\n관리자에게 문의해주세요.\n전산실 이승재");
+				}	
+			} else {
+				alertFail("아이디 중복", "아이디가 중복됩니다.\n다시 입력해주세요");
+			}
+		} 
+		// 초기화
+		initTextField();
 	}
 	
 	/**
@@ -152,13 +183,18 @@ public class StoreManagementController implements Initializable {
 	 */
 	public void handleDeleteBtn(ActionEvent e) {
 		
-	}
-	
-	/**
-	 * ------------------------------------테이블뷰 정보 표시
-	 */
-	public void showTableView() {
-//		tc_code.setCellValueFactory(cellData -> cellData.);
+		int index = tv.getSelectionModel().getSelectedIndex();
+		User delUser = data.get(index);
+		
+		DatabaseController db = new DatabaseController();
+		int result = db.deleteUserData(delUser);
+		if (result > 0) {
+			data.remove(index);
+			alertOk("삭제 성공", "삭제에 성공했습니다.");
+		} else {
+			alertFail("삭제 실패", "삭제에 실패했습니다./n관리자에게 문의해주세요.\n전산실 이승재");
+		}
+		initTextField();
 	}
 	
 	/**
@@ -171,6 +207,7 @@ public class StoreManagementController implements Initializable {
 		StorePassword.setText("");
 		StoreTel.setText("");
 		StoreAddress.setText("");
+		StoreCode.setEditable(true);
 	}
 	
 	/**
@@ -194,11 +231,7 @@ public class StoreManagementController implements Initializable {
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Invalid Fields");
-			alert.setHeaderText("Please correct invalid fields");
-			alert.setContentText(errorMessage);
-			alert.showAndWait();
+			alertFail("입력 오류", errorMessage);
 			return false;
 		}
 	}
@@ -208,9 +241,22 @@ public class StoreManagementController implements Initializable {
 	 */
 	@FXML
 	public void tableClick() {
-		
-		
-		
+		StoreCode.setEditable(false);
+		try {
+			// 선택한 셀의 인덱스 가져오기
+			int index = tv.getSelectionModel().getSelectedIndex();
+			
+			// 인덱스의 데이터값 화면에 출력
+			User user = data.get(index);
+			StoreCode.setText(String.valueOf(user.getCode()));;
+			StoreName.setText(user.getName());
+			StoreId.setText(user.getId());
+			StorePassword.setText(user.getPasswd());
+			StoreTel.setText(user.getTel());
+			StoreAddress.setText(user.getAddress());
+		} catch (IndexOutOfBoundsException e) {
+			alertFail("영역선택 범위초과", "리스트의 값을 선택하세요.");
+		}
 	}
 	
 	/**
@@ -222,6 +268,29 @@ public class StoreManagementController implements Initializable {
 		data = FXCollections.observableArrayList(userList);
 		tv.setItems(data);
 	}
+	
+	/**
+	 * ------------------------------------OK 알림창
+	 */
+	public void alertOk(String msg, String text) {
+		Alert ok = new Alert(AlertType.INFORMATION);
+		ok.setTitle(msg);
+		ok.setHeaderText(msg);
+		ok.setContentText(text);
+		ok.showAndWait();
+	}
+	
+	/**
+	 * ------------------------------------ERROR 알림창
+	 */
+	public void alertFail(String msg, String text) {
+		Alert fail = new Alert(AlertType.WARNING);
+		fail.setTitle(msg);
+		fail.setHeaderText(msg);
+		fail.setContentText(text);
+		fail.showAndWait();
+	}
+	
 	
 	/**
 	 * ------------------------------------초기화 : load된 후 실행

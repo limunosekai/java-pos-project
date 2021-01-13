@@ -12,7 +12,7 @@
 <AnchorPane prefHeight="600.0" prefWidth="609.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kg.fx.lim.admin.view.StoreManagementController">
    <children>
       <Label layoutX="161.0" layoutY="185.0" prefHeight="174.0" prefWidth="251.0" text="안녕하신가" />
-      <TableView fx:id="tv" layoutX="33.0" layoutY="78.0" onSort="#tableClick" prefHeight="275.0" prefWidth="545.0">
+      <TableView fx:id="tv" layoutX="33.0" layoutY="78.0" onMouseClicked="#tableClick" prefHeight="275.0" prefWidth="545.0">
         <columns>
           <TableColumn fx:id="tc_code" prefWidth="63.200016021728516" text="매장코드" />
           <TableColumn fx:id="tc_name" prefWidth="87.20001220703125" text="매장이름" />
