@@ -59,6 +59,7 @@ public class LoginController {
 			idFail.setHeaderText("ID 입력오류");
 			idFail.setContentText("ID를 입력해주세요");
 			idFail.showAndWait();
+			return;
 		}
 		// password 입력 오류시
 		if (passWordField.getText().isEmpty()) {
@@ -67,6 +68,7 @@ public class LoginController {
 			passwdFail.setHeaderText("비밀번호 입력오류");
 			passwdFail.setContentText("비밀번호를 입력해주세요");
 			passwdFail.showAndWait();
+			return;
 		}
 
 		userId = userNameField.getText();

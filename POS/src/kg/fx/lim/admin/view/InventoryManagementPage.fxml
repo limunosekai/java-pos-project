@@ -17,16 +17,16 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </Button>
-      <TableView fx:id="tv" layoutX="33.0" layoutY="78.0" prefHeight="275.0" prefWidth="545.0">
+      <TableView fx:id="tv" layoutX="33.0" layoutY="78.0" onMouseClicked="#tableClick" prefHeight="275.0" prefWidth="545.0">
         <columns>
-          <TableColumn prefWidth="63.200016021728516" text="상품번호" />
-          <TableColumn prefWidth="72.800048828125" text="카테고리" />
-            <TableColumn prefWidth="134.3999481201172" text="상품명" />
-            <TableColumn prefWidth="31.20001220703125" text="수량" />
-            <TableColumn prefWidth="61.5999755859375" text="정상가" />
-            <TableColumn prefWidth="60.0" text="할인가" />
-            <TableColumn prefWidth="48.0" text="할인율" />
-            <TableColumn prefWidth="60.00003662109373" text="할인액" />
+          <TableColumn fx:id="tc_code" prefWidth="63.200016021728516" text="상품번호" />
+          <TableColumn fx:id="tc_category" prefWidth="72.800048828125" text="카테고리" />
+            <TableColumn fx:id="tc_name" prefWidth="134.3999481201172" text="상품명" />
+            <TableColumn fx:id="tc_quantity" prefWidth="31.20001220703125" text="수량" />
+            <TableColumn fx:id="tc_price" prefWidth="61.5999755859375" text="정상가" />
+            <TableColumn fx:id="tc_salePrice" prefWidth="60.0" text="할인가" />
+            <TableColumn fx:id="tc_discountRate" prefWidth="48.0" text="할인율" />
+            <TableColumn fx:id="tc_discount" prefWidth="68.800048828125" text="할인액" />
         </columns>
          <cursor>
             <Cursor fx:constant="HAND" />
