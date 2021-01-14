@@ -295,6 +295,22 @@ public class DatabaseController {
 	}
 	
 	/**
+	 * ---------------------------------------- DB에 판매된 상품 데이터 업데이트
+	 */
+	public int updateSoldProduct(Product product) {
+		int result = 0;
+		try {
+			String sql = "UPDATE product SET product_quantity = product_quantity-1 WHERE product_code = ?";
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1,product.getCode());
+			result = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return result;
+	}
+	
+	/**
 	 * ----------------------------------------DB에 사용자 리스트 가져오기
 	 */
 	public ArrayList<User> loadAllUserList() {
@@ -393,7 +409,7 @@ public class DatabaseController {
 				product.setPrice(price);
 				int salePrice = rs.getInt("product_discount_price");
 				product.setSalePrice(salePrice);
-				product.setQuantity(rs.getInt("product_quantity"));
+				product.setQuantity(1);
 				
 				// 할인율 계산
 				int discountRate = Math.round(((float)(price - salePrice) / price) * 100);

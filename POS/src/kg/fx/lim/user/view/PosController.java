@@ -2,6 +2,7 @@ package kg.fx.lim.user.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -89,8 +90,9 @@ public class PosController implements Initializable {
 	private TextField additionalPayment;
 	@FXML
 	private TextField exchange;
+	int result = 0;
 	private ObservableList<Product> data = FXCollections.observableArrayList();
-	
+	private DecimalFormat formatter = new DecimalFormat("###,###");
 	// ---------------------------------------------생성자
 	public PosController() {
 	}
@@ -137,19 +139,23 @@ public class PosController implements Initializable {
 			controller.setDialogStage(dialogStage);
 				
 			dialogStage.showAndWait();
+			
+			// 다이얼로그 확인버튼 클릭시
 			if(!controller.isOkClicked()) {
 				return;
 			} else {
+				// DB에서 값 불러와서 테이블에 표시
 				String name = controller.getSelectedItem();	
 				DatabaseController db = new DatabaseController();
 				Product product = (Product) db.loadProductByName(name);
 				data.add(product);
 				information.setItems(data);
+				setTextField();
 			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 	
 	/**
@@ -157,7 +163,15 @@ public class PosController implements Initializable {
 	 */
 	@FXML
 	public void handleCancelBtn() {
-		
+		Product selectedItem = information.getSelectionModel().getSelectedItem();
+		// 선택 안하고 버튼 눌렀을시 처리
+		if(selectedItem == null) {
+			return;
+		}
+		// 선택된 객체 삭제 후 테이블에 표시
+		data.remove(selectedItem);
+		information.setItems(data);
+		setTextField();
 	}
 	
 	/**
@@ -165,14 +179,16 @@ public class PosController implements Initializable {
 	 */
 	@FXML
 	public void handleInitBtn() {
-		information.getItems().clear();
+		initTextField();
+		data.clear();
+		information.setItems(data);
 	}
 	
 	/**
 	 * -------------------------------------------------판매관리 버튼
 	 */
 	@FXML
-	public void handleSalesBtn(ActionEvent e) {
+	public void handleSalesBtn() {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("SalesManagementLayout.fxml"));
 			Scene scene = new Scene(root);
@@ -190,7 +206,7 @@ public class PosController implements Initializable {
 	 * -------------------------------------------------재고관리 버튼
 	 */
 	@FXML
-	public void handleInventoryBtn(ActionEvent e) {
+	public void handleInventoryBtn() {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("InventoryManagementLayout.fxml"));
 			Scene scene = new Scene(root);
@@ -208,12 +224,56 @@ public class PosController implements Initializable {
 	 * --------------------------------------------------결제 버튼
 	 */
 	@FXML
-	public void handlePayBtn(ActionEvent e) {
+	public void handlePayBtn() {
+		// 목록에 상품이 없을시
+		if(data.size() == 0) {
+			alertFail("결제 오류", "상품을 최소 1개 이상 선택해주세요.");
+			return;
+		}
+		
+		DatabaseController db = new DatabaseController();
+		// 반복문을 돌며 DB에 데이터 업데이트
+		for (int i=0; i<data.size(); i++) {
+			result = db.updateSoldProduct(data.get(i));
+			//DB 검사
+			if(result <= 0) {
+				// 실패 메시지 출력
+				alertFail("전산 등록 실패", "전산 등록에 실패했습니다.\n관리자에게 문의해주세요.\n전산실 이승재");
+				break;
+			}
+		}
 		// 결제완료창
-		Alert pay = new Alert(AlertType.INFORMATION);
-		pay.setTitle("결제 완료");
-		pay.setContentText("결제가 완료되었습니다.");
-		pay.showAndWait();
+		alertOk("결제 완료", "결제가 완료되었습니다.");
+		// GUI, list 초기화
+		data.clear();
+		information.setItems(data);
+		initTextField();
+	}
+	
+	/**
+	 * --------------------------------------------------userName 화면 표시
+	 */
+	public void setTextField() {
+		// 텍스트필드 화면에 표시
+		int price = 0;
+		int discount = 0;
+		int salePrice = 0;
+		int quantity = 0;
+		// 누적 값 계산
+		for(int i=0; i<data.size(); i++) {
+			price += data.get(i).getPrice();
+			if(data.get(i).getSalePrice() == 0) {
+				salePrice += data.get(i).getPrice();
+			}
+			discount += data.get(i).getDiscount();
+			salePrice += data.get(i).getSalePrice();
+			quantity += data.get(i).getQuantity();
+		}
+		totalPrice.setText(String.valueOf(formatter.format(price)));
+		totalAmount.setText(String.valueOf(formatter.format(salePrice)));
+		totalQuantity.setText(String.valueOf(quantity));
+		totaldiscount.setText(String.valueOf(formatter.format(discount)));
+		totalAmountRight.setText(String.valueOf(formatter.format(salePrice)));
 	}
 	
 	/**
@@ -224,10 +284,40 @@ public class PosController implements Initializable {
 	}
 	
 	/**
-	 * --------------------------------------------------테이블뷰 데이터 추가
+	 * ------------------------------------OK 알림창
 	 */
-	public void addData(String name) {
-		
+	public void alertOk(String msg, String text) {
+		Alert ok = new Alert(AlertType.INFORMATION);
+		ok.setTitle(msg);
+		ok.setHeaderText(msg);
+		ok.setContentText(text);
+		ok.showAndWait();
+	}
+	
+	/**
+	 * ------------------------------------ERROR 알림창
+	 */
+	public void alertFail(String msg, String text) {
+		Alert fail = new Alert(AlertType.WARNING);
+		fail.setTitle(msg);
+		fail.setHeaderText(msg);
+		fail.setContentText(text);
+		fail.showAndWait();
+	}
+	
+	/**
+	 * ------------------------------------텍스트필드 초기화
+	 */
+	public void initTextField() {
+		totalQuantity.clear();
+		totalAmount.clear();
+		totalPrice.clear();
+		totaldiscount.clear();
+		totalAmountRight.clear();
+		card.clear();
+		cash.clear();
+		exchange.clear();
+		additionalPayment.clear();
 	}
 	
 	/**

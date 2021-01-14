@@ -8,6 +8,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -28,18 +30,25 @@ public class AddProductDialogController implements Initializable{
 	
 	// ------------------------------------------생성자
 	public AddProductDialogController() {
-		
 	}
 	
 	// ------------------------------------------메소드
 	public String handleOkBtn() {
 		selectedItem = lv.getSelectionModel().getSelectedItem();
-		if (selectedItem.isEmpty() || selectedItem.length() == 0) {
+		try {
+			// 유효성 검사
+			if (!selectedItem.isEmpty() && selectedItem.length() != 0) {
+				okClicked = true;
+				dialogStage.close();
+			}
+		} catch (NullPointerException e) { // 선택 안하고 확인 눌렀을시 처리
+			Alert error = new Alert(AlertType.WARNING);
+			error.setTitle("WARNING");
+			error.setHeaderText("상품 선택 오류");
+			error.setContentText("상품을 선택하고 눌러주세요.");
+			error.showAndWait();
 			okClicked = false;
-			return "";
-		} 
-		okClicked = true;
-		dialogStage.close();
+		}
 		return selectedItem;
 	}
 	public void handleCancelBtn() {
