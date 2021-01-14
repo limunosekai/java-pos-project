@@ -45,13 +45,14 @@
          <children>
             <TableView fx:id="information" prefHeight="398.0" prefWidth="530.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn editable="false" prefWidth="28.000030517578125" text="번호" />
-                <TableColumn editable="false" prefWidth="166.39999389648438" text="상품명" />
-                  <TableColumn editable="false" prefWidth="31.20001220703125" text="수량" />
-                  <TableColumn editable="false" prefWidth="75.0" text="정상가" />
-                  <TableColumn editable="false" prefWidth="75.0" text="할인가" />
-                  <TableColumn editable="false" prefWidth="39.99993896484375" text="할인율" />
-                  <TableColumn editable="false" prefWidth="110.4000244140625" text="금액" />
+                <TableColumn fx:id="tc_code" editable="false" prefWidth="28.000030517578125" text="코드" />
+                <TableColumn fx:id="tc_name" editable="false" prefWidth="140.79998779296875" text="상품명" />
+                  <TableColumn fx:id="tc_quantity" editable="false" prefWidth="30.399993896484375" text="수량" />
+                  <TableColumn fx:id="tc_price" editable="false" prefWidth="73.5999755859375" text="정상가" />
+                  <TableColumn fx:id="tc_salePrice" editable="false" prefWidth="72.00006103515625" text="할인가" />
+                  <TableColumn fx:id="tc_discountRate" editable="false" prefWidth="46.4000244140625" text="할인율" />
+                  <TableColumn fx:id="tc_discount" editable="false" prefWidth="76.7999267578125" text="할인액" />
+                  <TableColumn fx:id="tc_category" prefWidth="58.39998779296877" text="카테고리" />
               </columns>
             </TableView>
             <Label layoutX="14.0" layoutY="410.0" text="총 판매 수량 : " textFill="#fbefdf">
@@ -64,12 +65,12 @@
                   <Font name="Yj BUTGOT Light" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="totalQuantity" alignment="CENTER_RIGHT" layoutX="128.0" layoutY="408.0" prefHeight="22.0" prefWidth="114.0" promptText="0">
+            <TextField fx:id="totalQuantity" alignment="CENTER_RIGHT" layoutX="128.0" layoutY="408.0" prefHeight="22.0" prefWidth="114.0" promptText="0 개">
                <font>
                   <Font name="Arial Rounded MT Bold" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="totalAmount" alignment="CENTER_RIGHT" layoutX="367.0" layoutY="408.0" prefHeight="22.0" prefWidth="150.0" promptText="0">
+            <TextField fx:id="totalAmount" alignment="CENTER_RIGHT" layoutX="367.0" layoutY="408.0" prefHeight="22.0" prefWidth="150.0" promptText="0 원">
                <font>
                   <Font name="Arial Rounded MT Bold" size="12.0" />
                </font>
@@ -105,12 +106,108 @@
       </AnchorPane>
       <VBox layoutX="593.0" layoutY="74.0" prefHeight="528.0" prefWidth="190.0">
          <children>
-            <TableView fx:id="price" prefHeight="328.0" prefWidth="190.0">
-              <columns>
-                <TableColumn editable="false" prefWidth="68.79998779296875" resizable="false" text="항목" />
-                <TableColumn editable="false" prefWidth="120.800048828125" resizable="false" text="금액" />
-              </columns>
-            </TableView>
+            <AnchorPane prefHeight="328.0" prefWidth="190.0" style="-fx-background-color: #fbefdf;">
+               <children>
+                  <Label layoutX="7.0" layoutY="55.0" text="할인 :">
+                     <font>
+                        <Font name="Yu Gothic Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="7.0" layoutY="149.0" text="카드 :">
+                     <font>
+                        <Font name="Yu Gothic Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="7.0" layoutY="244.0" text="추가결제 :">
+                     <font>
+                        <Font name="Yu Gothic Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <AnchorPane layoutX="1.0" layoutY="1.0" prefHeight="47.0" prefWidth="190.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="합계 :">
+                           <font>
+                              <Font name="Yu Gothic Bold" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" top="8.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="totalPrice" alignment="CENTER_RIGHT" layoutX="74.0" layoutY="12.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="2.0" layoutY="93.0" prefHeight="47.0" prefWidth="190.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="1.0" text="총계 :">
+                           <font>
+                              <Font name="Yu Gothic Bold" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" top="8.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="totalAmountRight" alignment="CENTER_RIGHT" layoutX="73.0" layoutY="12.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="1.0" layoutY="185.0" prefHeight="47.0" prefWidth="190.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="현금 :">
+                           <font>
+                              <Font name="Yu Gothic Bold" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" top="8.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="cash" alignment="CENTER_RIGHT" layoutX="74.0" layoutY="12.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="1.0" layoutY="279.0" prefHeight="47.0" prefWidth="190.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="3.0" text="거스름 :">
+                           <font>
+                              <Font name="Yu Gothic Bold" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" top="8.0" />
+                           </padding>
+                        </Label>
+                        <TextField fx:id="exchange" alignment="CENTER_RIGHT" layoutX="87.0" layoutY="14.0" prefHeight="22.0" prefWidth="90.0" promptText="0 원">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="12.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </AnchorPane>
+                  <TextField fx:id="totaldiscount" alignment="CENTER_RIGHT" layoutX="75.0" layoutY="59.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="card" alignment="CENTER_RIGHT" layoutX="75.0" layoutY="153.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="additionalPayment" alignment="CENTER_RIGHT" layoutX="87.0" layoutY="246.0" prefHeight="22.0" prefWidth="90.0" promptText="0 원">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </AnchorPane>
             <Button fx:id="addBtn" mnemonicParsing="false" onAction="#handleAddBtn" prefHeight="40.0" prefWidth="194.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="추    가" textFill="#fbefdf">
                <cursor>
                   <Cursor fx:constant="HAND" />

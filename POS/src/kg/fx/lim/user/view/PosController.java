@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -21,6 +24,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kg.fx.lim.MainApp;
+import kg.fx.lim.login.view.DatabaseController;
+import kg.fx.lim.model.Product;
 
 /**
 ---------------------------------------------------------------------------
@@ -49,17 +54,42 @@ public class PosController implements Initializable {
 	@FXML
 	private Label userName;
 	@FXML
-	private TableView<String> information;
-//	@FXML
-//	private TableColumn<String> firstNameColumn;
-//	@FXML
-//	private TableColumn<String> lastNameColumn;
+	private TableView<Product> information;
 	@FXML
-	private TableView<String> price;
+	private TableColumn<Product,Integer> tc_code;
+	@FXML               
+	private TableColumn<Product,String> tc_category;
+	@FXML               
+	private TableColumn<Product,String> tc_name;
+	@FXML               
+	private TableColumn<Product,Integer> tc_quantity;
+	@FXML               
+	private TableColumn<Product,Integer> tc_price;
+	@FXML               
+	private TableColumn<Product,Integer> tc_salePrice;
+	@FXML               
+	private TableColumn<Product,Integer> tc_discountRate;
+	@FXML               
+	private TableColumn<Product,Integer> tc_discount;
 	@FXML
 	private TextField totalQuantity;
 	@FXML
 	private TextField totalAmount;
+	@FXML
+	private TextField totalPrice;
+	@FXML
+	private TextField totaldiscount;
+	@FXML
+	private TextField totalAmountRight;
+	@FXML
+	private TextField card;
+	@FXML
+	private TextField cash;
+	@FXML
+	private TextField additionalPayment;
+	@FXML
+	private TextField exchange;
+	private ObservableList<Product> data = FXCollections.observableArrayList();
 	
 	// ---------------------------------------------생성자
 	public PosController() {
@@ -90,7 +120,7 @@ public class PosController implements Initializable {
 	 * ----------------------------------------------추가 버튼
 	 */
 	@FXML
-	public boolean handleAddBtn() {
+	public void handleAddBtn() {
 		// 다이얼로그 호출
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -105,13 +135,20 @@ public class PosController implements Initializable {
 			
 			AddProductDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			
+				
 			dialogStage.showAndWait();
+			if(!controller.isOkClicked()) {
+				return;
+			} else {
+				String name = controller.getSelectedItem();	
+				DatabaseController db = new DatabaseController();
+				Product product = (Product) db.loadProductByName(name);
+				data.add(product);
+				information.setItems(data);
+			}
 			
-			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
 		}	
 	}
 	
@@ -187,9 +224,24 @@ public class PosController implements Initializable {
 	}
 	
 	/**
+	 * --------------------------------------------------테이블뷰 데이터 추가
+	 */
+	public void addData(String name) {
+		
+	}
+	
+	/**
 	 * --------------------------------------------------초기화 : load 후 자동싷행
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		tc_code.setCellValueFactory(new PropertyValueFactory<>("code"));
+		tc_category.setCellValueFactory(new PropertyValueFactory<>("category"));
+		tc_name.setCellValueFactory(new PropertyValueFactory<>("name"));
+		tc_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+		tc_price.setCellValueFactory(new PropertyValueFactory<>("price"));
+		tc_salePrice.setCellValueFactory(new PropertyValueFactory<>("salePrice"));
+		tc_discountRate.setCellValueFactory(new PropertyValueFactory<>("discountRate"));
+		tc_discount.setCellValueFactory(new PropertyValueFactory<>("discount"));
 	}
 }

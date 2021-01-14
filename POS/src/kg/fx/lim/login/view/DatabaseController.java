@@ -129,6 +129,32 @@ public class DatabaseController {
 	}
 	
 	/**
+	 * ----------------------------------------DB에서 product_name 모두 반환
+	 */
+	public ArrayList<String> loadAllProductName() {
+		ResultSet rs = null;
+
+		ArrayList<String> productNames = new ArrayList<>();
+
+		try {
+			String sql = "SELECT product_name FROM product";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				productNames.add(rs.getString(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+			try {if (pstm != null) pstm.close();} catch(Exception ex) {}
+			try {if (conn != null) conn.close();} catch(Exception ex) {}
+		}
+		return productNames;
+	}
+	
+	/**
 	 * ----------------------------------------DB에 사용자 데이터 저장하기
 	 */
 	public int saveUserData(User user) {
@@ -306,7 +332,7 @@ public class DatabaseController {
 		ResultSet rs = null;
 		ArrayList<Product> list = new ArrayList<>();
 		try {
-			String sql = "SELECT * FROM product;";
+			String sql = "SELECT * FROM product";
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 
@@ -346,6 +372,54 @@ public class DatabaseController {
 			try {if (pstm != null) pstm.close();} catch(Exception ex) {}
 		}
 		return list;
+	}
+	
+	/**
+	 * ---------------------------------------- DB에서 product_name에 맞는 데이터 가져오기
+	 */
+	public Product loadProductByName(String name) throws NullPointerException {
+		ResultSet rs = null;
+		Product product = new Product();
+		try {
+			String sql = "SELECT * FROM product WHERE product_name="+"'"+name+"'";
+			pstm = conn.prepareStatement(sql);
+//			pstm.setString(1, name);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {	
+				product.setCode(rs.getInt("product_code"));
+				product.setName(rs.getString("product_name"));
+				int price = rs.getInt("product_price");
+				product.setPrice(price);
+				int salePrice = rs.getInt("product_discount_price");
+				product.setSalePrice(salePrice);
+				product.setQuantity(rs.getInt("product_quantity"));
+				
+				// 할인율 계산
+				int discountRate = Math.round(((float)(price - salePrice) / price) * 100);
+				if (salePrice == 0) {
+					discountRate = 0;
+				}
+				product.setDiscountRate(discountRate);
+				
+				// 할인액 계산
+				int discount = price - salePrice;
+				if(salePrice == 0) {
+					discount = 0;
+				}
+				product.setDiscount(discount);
+				
+				// 카테고리 가져오기
+				String category = loadCategory(rs.getInt("category_code"));
+				product.setCategory(category);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+			try {if (pstm != null) pstm.close();} catch(Exception ex) {}
+		}
+		return product;
 	}
 	
 	/**
