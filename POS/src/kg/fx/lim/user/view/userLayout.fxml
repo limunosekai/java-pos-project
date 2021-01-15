@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -65,18 +66,18 @@
                   <Font name="Yj BUTGOT Light" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="totalQuantity" alignment="CENTER_RIGHT" editable="false" layoutX="128.0" layoutY="408.0" prefHeight="22.0" prefWidth="114.0" promptText="0 개">
+            <TextField fx:id="totalQuantity" alignment="CENTER_RIGHT" editable="false" layoutX="128.0" layoutY="408.0" prefHeight="22.0" prefWidth="114.0" promptText="0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="totalAmount" alignment="CENTER_RIGHT" editable="false" layoutX="367.0" layoutY="408.0" prefHeight="22.0" prefWidth="150.0" promptText="0 원">
+            <TextField fx:id="totalAmount" alignment="CENTER_RIGHT" editable="false" layoutX="367.0" layoutY="408.0" prefHeight="22.0" prefWidth="150.0" promptText="0">
                <font>
                   <Font name="Arial Rounded MT Bold" size="12.0" />
                </font>
             </TextField>
          </children></AnchorPane>
-      <AnchorPane layoutX="-4.0" layoutY="520.0" prefHeight="78.0" prefWidth="568.0">
+      <AnchorPane layoutX="-4.0" layoutY="520.0" prefHeight="78.0" prefWidth="579.0">
          <children>
           <Button fx:id="initBtn" layoutX="34.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleInitBtn" prefHeight="40.0" prefWidth="166.0" style="-fx-background-color: #bf3f27;" text="초기화" textFill="#fbefdf">
                <cursor>
@@ -104,9 +105,9 @@
             </Button>
          </children>
       </AnchorPane>
-      <VBox layoutX="593.0" layoutY="74.0" prefHeight="528.0" prefWidth="190.0">
+      <VBox layoutX="593.0" layoutY="74.0" prefHeight="528.0" prefWidth="193.0">
          <children>
-            <AnchorPane prefHeight="328.0" prefWidth="190.0" style="-fx-background-color: #fbefdf;">
+            <AnchorPane prefHeight="281.0" prefWidth="194.0" style="-fx-background-color: #fbefdf;">
                <children>
                   <Label layoutX="7.0" layoutY="55.0" text="할인 :">
                      <font>
@@ -133,7 +134,7 @@
                               <Insets left="5.0" top="8.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="totalPrice" alignment="CENTER_RIGHT" editable="false" layoutX="74.0" layoutY="12.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                        <TextField fx:id="totalPrice" alignment="CENTER_RIGHT" editable="false" layoutX="74.0" layoutY="12.0" prefHeight="22.0" prefWidth="101.0" promptText="0">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font>
@@ -150,7 +151,7 @@
                               <Insets left="5.0" top="8.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="totalAmountRight" alignment="CENTER_RIGHT" editable="false" layoutX="73.0" layoutY="12.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                        <TextField fx:id="totalAmountRight" alignment="CENTER_RIGHT" editable="false" layoutX="73.0" layoutY="12.0" prefHeight="22.0" prefWidth="101.0" promptText="0">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font>
@@ -167,7 +168,7 @@
                               <Insets left="5.0" top="8.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="cash" alignment="CENTER_RIGHT" editable="false" layoutX="74.0" layoutY="12.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                        <TextField fx:id="cash" alignment="CENTER_RIGHT" editable="false" layoutX="74.0" layoutY="12.0" prefHeight="22.0" prefWidth="101.0" promptText="0">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font>
@@ -184,51 +185,63 @@
                               <Insets left="5.0" top="8.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="exchange" alignment="CENTER_RIGHT" editable="false" layoutX="87.0" layoutY="14.0" prefHeight="22.0" prefWidth="90.0" promptText="0 원">
+                        <TextField fx:id="exchange" alignment="CENTER_RIGHT" editable="false" layoutX="87.0" layoutY="14.0" prefHeight="22.0" prefWidth="90.0" promptText="0">
                            <font>
                               <Font name="Arial Rounded MT Bold" size="12.0" />
                            </font>
                         </TextField>
                      </children>
                   </AnchorPane>
-                  <TextField fx:id="totaldiscount" alignment="CENTER_RIGHT" editable="false" layoutX="75.0" layoutY="59.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                  <TextField fx:id="totaldiscount" alignment="CENTER_RIGHT" editable="false" layoutX="75.0" layoutY="59.0" prefHeight="22.0" prefWidth="101.0" promptText="0">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="card" alignment="CENTER_RIGHT" editable="false" layoutX="75.0" layoutY="153.0" prefHeight="22.0" prefWidth="101.0" promptText="0 원">
+                  <TextField fx:id="card" alignment="CENTER_RIGHT" editable="false" layoutX="75.0" layoutY="153.0" prefHeight="22.0" prefWidth="101.0" promptText="0">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="additionalPayment" alignment="CENTER_RIGHT" editable="false" layoutX="87.0" layoutY="246.0" prefHeight="22.0" prefWidth="90.0" promptText="0 원">
+                  <TextField fx:id="additionalPayment" alignment="CENTER_RIGHT" editable="false" layoutX="87.0" layoutY="246.0" prefHeight="22.0" prefWidth="90.0" promptText="0">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="12.0" />
                      </font>
                   </TextField>
                </children>
             </AnchorPane>
-            <Button fx:id="addBtn" mnemonicParsing="false" onAction="#handleAddBtn" prefHeight="40.0" prefWidth="194.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="추    가" textFill="#fbefdf">
+            <HBox prefHeight="78.0" prefWidth="194.0">
+               <children>
+                  <Button fx:id="addBtn" alignment="CENTER" minWidth="73.0" mnemonicParsing="false" onAction="#handleAddBtn" prefHeight="40.0" prefWidth="89.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="추가" textFill="#fbefdf">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Yj BUTGOT Light" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="cancelBtn" alignment="CENTER" minWidth="71.0" mnemonicParsing="false" onAction="#handleCancelBtn" prefHeight="40.0" prefWidth="89.0" style="-fx-background-color: #bf3f27;" text="취소" textFill="#fbefdf">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <font>
+                        <Font name="Yj BUTGOT Light" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Button fx:id="methodBtn" mnemonicParsing="false" onAction="#handleMethodBtn" prefHeight="40.0" prefWidth="192.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="결제 방법" textFill="#fbefdf">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <font>
                   <Font name="Yj BUTGOT Light" size="20.0" />
                </font>
-               <VBox.margin>
-                  <Insets top="19.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#handleCancelBtn" prefHeight="40.0" prefWidth="191.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="취    소" textFill="#fbefdf">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="Yj BUTGOT Light" size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="19.0" />
-               </VBox.margin>
             </Button>
             <Button fx:id="payBtn" mnemonicParsing="false" onAction="#handlePayBtn" prefHeight="40.0" prefWidth="192.0" style="-fx-background-color: #bf3f27;" text="결    제" textFill="#fbefdf">
                <cursor>

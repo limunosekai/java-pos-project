@@ -3,6 +3,8 @@ package kg.fx.lim.login.view;
 import java.sql.*;
 import java.util.ArrayList;
 
+import kg.fx.lim.model.Order;
+import kg.fx.lim.model.OrderDetail;
 import kg.fx.lim.model.Product;
 import kg.fx.lim.model.User;
 
@@ -100,6 +102,30 @@ public class DatabaseController {
 			try {if (conn != null) conn.close();} catch(Exception ex) {}
 		}
 		return userName;
+	}
+	
+	/**
+	 * ----------------------------------------DB에서 사용자가 입력한 id에 맞는 userName 반환
+	 */
+	public int loadUserCodeByName(String name) {
+		ResultSet rs = null;
+
+		int userCode = 0;
+
+		try {
+			String sql = "SELECT user_code FROM user WHERE user_name=" + "'" + name + "'";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				userCode = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return userCode;
 	}
 
 	/**
@@ -201,6 +227,42 @@ public class DatabaseController {
 		} finally {
 			try {if (conn != null) pstm.close();} catch(Exception e) {}
 		}
+		return result;
+	}
+	
+	/**
+	 * ---------------------------------------- DB에 주문정보 저장하기
+	 */
+	public int saveOrder(Order order) {
+		int result = 0;
+		try {
+			String sql = "INSERT INTO orders(order_date, total_amount, user_code) VALUES(?,?,?)";
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1, order.getOrderDate());
+			pstm.setInt(2, order.getTotalAmount());
+			pstm.setInt(3, order.getUserCode());
+			result = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return result;
+	}
+	
+	/**
+	 * ---------------------------------------- DB에 주문 디테일 정보 저장하기
+	 */
+	public int saveOrderDetail(OrderDetail detail) {
+		int result = 0;
+		try {
+			String sql = "INSERT INTO order_detail(order_product_quantity, order_number, product_code) VALUES(?,?,?)";
+			pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, detail.getOrderProductQuantity());
+			pstm.setInt(2, detail.getOrderNumber());
+			pstm.setInt(3, detail.getProductCode());
+			result = pstm.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
 		return result;
 	}
 	
@@ -484,6 +546,31 @@ public class DatabaseController {
 			try {if (rs != null) rs.close();} catch(Exception ex) {}
 		}
 		return categoryCode;
+	}
+	
+	/**
+	 * ----------------------------------------DB에서 주문시간에 맞는 order number 가져오기
+	 */
+	public int loadOrderNumber(String t) {
+		ResultSet rs = null;
+
+		int number = 0;
+
+		try {
+			String sql = "SELECT order_number FROM orders WHERE order_date=" + "'" + t + "'";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				number = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		System.out.println(number);
+		return number;
 	}
 	
 	/**
