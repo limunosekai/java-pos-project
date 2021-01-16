@@ -627,7 +627,7 @@ public class DatabaseController {
 	
 	
 	/**
-	 * ----------------------------------------DB에서 당일 총매출 가져오기
+	 * ----------------------------------------DB에서 해당 매장의 당일 총매출 가져오기
 	 */
 	public int loadTodaySales(int code) {
 		ResultSet rs = null;
@@ -642,6 +642,30 @@ public class DatabaseController {
 
 			while (rs.next()) {
 				total = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return total;
+	}
+	
+	/**
+	 * ----------------------------------------DB에서 해당 매장의 월간 총매출 가져오기
+	 */
+	public ArrayList<Integer> loadMonthlySales(int code) {
+		ResultSet rs = null;
+
+		ArrayList<Integer> total = new ArrayList<>(); 
+
+		try {
+			String sql = "SELECT MONTH(order_date) AS m, sum(total_amount) FROM orders WHERE user_code="+"'"+code+"'"+"GROUP BY m";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				total.add(rs.getInt("sum(total_amount)"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

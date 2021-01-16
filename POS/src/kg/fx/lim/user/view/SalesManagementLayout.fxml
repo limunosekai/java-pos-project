@@ -37,7 +37,7 @@
       </Button>
       <LineChart fx:id="lc" layoutX="344.0" layoutY="78.0" prefHeight="186.0" prefWidth="426.0" style="-fx-background-color: #fbefdf; -fx-background-radius: 5;">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis fx:id="month" side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />

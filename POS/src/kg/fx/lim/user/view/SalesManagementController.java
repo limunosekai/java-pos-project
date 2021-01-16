@@ -2,8 +2,11 @@ package kg.fx.lim.user.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -14,7 +17,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -48,6 +53,8 @@ public class SalesManagementController implements Initializable {
 	@FXML
 	private LineChart<String,Integer> lc;
 	@FXML
+	private CategoryAxis month;
+	@FXML
 	private TableView<OrderProductList> tv;
 	@FXML
 	private TableColumn<OrderProductList,Integer> tc_orderNumber;
@@ -68,6 +75,7 @@ public class SalesManagementController implements Initializable {
 	@FXML               
 	private TableColumn<OrderProductList,Integer> tc_discount;
 	private ObservableList<OrderProductList> data;
+	private ObservableList<String> monthNames = FXCollections.observableArrayList();
 	private DecimalFormat formatter = new DecimalFormat("###,###");
 	// -----------------------------------------생성자
 	public SalesManagementController() {
@@ -116,7 +124,7 @@ public class SalesManagementController implements Initializable {
 		int code = 0;
 		DatabaseController db = new DatabaseController();
 		
-		// 당일 매출총액
+		// --------------------------당일 매출총액
 		code = db.loadUserCodeByName(getUserName());
 		if(db.loadTodaySales(code) == 0) {
 			todaySales.setText("0");
@@ -124,13 +132,27 @@ public class SalesManagementController implements Initializable {
 			todaySales.setText(String.valueOf(formatter.format(db.loadTodaySales(code))));
 		}
 		
-		// 매출 리스트
+		// --------------------------매출 리스트
 		ArrayList<OrderProductList> list = db.loadAllOrderProductList(code);
 		data = FXCollections.observableArrayList(list);
 		tv.setItems(data);
 		
-		// 차트
+		// --------------------------차트
 		
+		// 월 이름을 배열로 가져옴
+		String[] months = DateFormatSymbols.getInstance(Locale.KOREAN).getMonths();
+		// 리스트로 변환하고 observableList에 추가
+		monthNames.addAll(Arrays.asList(months));
+		// 수평축에 월 이름을 카테고리로 할당
+		month.setCategories(monthNames);
+		
+		XYChart.Series<String, Integer> series = new XYChart.Series<>();
+		series.setName("monthly");
+		// 월별로 XYChart.Data 객체를 만들어 series에 추가
+		for(int i=0; i< db.loadMonthlySales(code).size(); i++) {
+			series.getData().add(new XYChart.Data<>(monthNames.get(i), db.loadMonthlySales(code).get(i)));
+		}
+		lc.getData().add(series);
 	}
 	
 	/**
