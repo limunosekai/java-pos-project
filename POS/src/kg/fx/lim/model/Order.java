@@ -1,7 +1,5 @@
 package kg.fx.lim.model;
 
-import java.sql.Timestamp;
-
 public class Order {
 	// 멤버필드
 	private int orderNumber;

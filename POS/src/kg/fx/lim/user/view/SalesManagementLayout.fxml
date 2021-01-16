@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -65,18 +66,18 @@
          </children></AnchorPane>
       <TableView fx:id="tv" layoutX="34.0" layoutY="287.0" prefHeight="279.0" prefWidth="738.0">
         <columns>
-          <TableColumn prefWidth="24.800018310546875" text="no" />
-          <TableColumn prefWidth="125.60000610351562" text="날짜" />
-            <TableColumn prefWidth="217.60003662109375" text="상품명" />
-            <TableColumn minWidth="0.0" prefWidth="29.5999755859375" text="수량" />
-            <TableColumn prefWidth="75.20001220703125" text="금액" />
-            <TableColumn prefWidth="76.0" text="정상가" />
-            <TableColumn prefWidth="72.00006103515625" text="할인가" />
-            <TableColumn prefWidth="46.4000244140625" text="할인율" />
-            <TableColumn prefWidth="71.199951171875" text="할인액" />
+          <TableColumn fx:id="tc_orderNumber" prefWidth="63.20001220703125" text="영수증번호" />
+          <TableColumn fx:id="tc_orderDate" prefWidth="89.5999755859375" text="날짜" />
+            <TableColumn fx:id="tc_category" prefWidth="56.0" text="카테고리" />
+            <TableColumn fx:id="tc_name" minWidth="0.0" prefWidth="230.39996337890625" text="상품명" />
+            <TableColumn fx:id="tc_quantity" prefWidth="37.60003662109375" text="수량" />
+            <TableColumn fx:id="tc_price" prefWidth="76.0" text="정상가" />
+            <TableColumn fx:id="tc_salePrice" prefWidth="72.00006103515625" text="할인가" />
+            <TableColumn fx:id="tc_discountRate" prefWidth="46.4000244140625" text="할인율" />
+            <TableColumn fx:id="tc_discount" prefWidth="60.800048828125" text="할인액" />
         </columns>
       </TableView>
-      <Button fx:id="homeBtn" layoutX="623.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleHomeBtn" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="HOME" textFill="#fbefdf">
+      <Button fx:id="homeBtn" layoutX="529.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleHomeBtn" prefHeight="32.0" prefWidth="77.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="HOME" textFill="#fbefdf">
          <font>
             <Font name="Arial Rounded MT Bold" size="16.0" />
          </font>
@@ -84,5 +85,13 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Label fx:id="storeName" layoutX="617.0" layoutY="18.0" style="-fx-border-color: fbefdf; -fx-border-radius: 5; -fx-background-color: #305457; -fx-background-radius: 5;" text="압구정점" textFill="#fbefdf">
+         <padding>
+            <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+         </padding>
+         <font>
+            <Font name="Yj BUTGOT Light" size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

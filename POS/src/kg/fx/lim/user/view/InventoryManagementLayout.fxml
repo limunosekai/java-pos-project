@@ -31,7 +31,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="homeBtn" layoutX="623.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleHomeBtn" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="HOME" textFill="#fbefdf">
+      <Button fx:id="homeBtn" layoutX="530.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleHomeBtn" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="HOME" textFill="#fbefdf">
          <font>
             <Font name="Arial Rounded MT Bold" size="16.0" />
          </font>
@@ -64,6 +64,14 @@
       <Button fx:id="resetBtn" focusTraversable="false" layoutX="318.0" layoutY="74.0" mnemonicParsing="false" onAction="#handleResetBtn" prefHeight="23.0" prefWidth="53.0" text="초기화">
          <font>
             <Font name="Yj BUTGOT Light" size="12.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="storeName" layoutX="612.0" layoutY="18.0" mnemonicParsing="false" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="압구정점" textFill="#fbefdf">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="16.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />

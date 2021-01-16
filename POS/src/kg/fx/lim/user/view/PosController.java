@@ -15,7 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
+//import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -221,8 +221,16 @@ public class PosController implements Initializable {
 	@FXML
 	public void handleSalesBtn() {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("SalesManagementLayout.fxml"));
-			Scene scene = new Scene(root);
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("SalesManagementLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+			SalesManagementController controller = loader.getController();
+			controller.setUserName(getUserName());
+			controller.showTodaySales();
+			
+//			Parent root = FXMLLoader.load(getClass().getResource("SalesManagementLayout.fxml"));
+			Scene scene = new Scene(page);
 			Stage userStage = (Stage) salesBtn.getScene().getWindow();
 			userStage.setScene(scene);
 			userStage.setTitle("판매 관리");
@@ -239,12 +247,19 @@ public class PosController implements Initializable {
 	@FXML
 	public void handleInventoryBtn() {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("InventoryManagementLayout.fxml"));
-			Scene scene = new Scene(root);
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("InventoryManagementLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+			InventoryManagementController controller = loader.getController();
+			controller.setUserName(getUserName());
+			
+//			Parent root = FXMLLoader.load(getClass().getResource("InventoryManagementLayout.fxml"));
+			Scene scene = new Scene(page);
 			Stage userStage = (Stage) salesBtn.getScene().getWindow();
 			userStage.setScene(scene);
 			userStage.setTitle("재고 관리");
-			userStage.setResizable(false);
+			userStage.setResizable(false);		
 			userStage.show();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
@@ -442,6 +457,14 @@ public class PosController implements Initializable {
 	 */
 	public void setUserName(String id) {
 		userName.setText(id);
+	}
+	
+	/**
+	 * --------------------------------------------------userName 반환
+	 */
+	public String getUserName() {
+		String name = userName.getText();
+		return name;
 	}
 	
 	/**

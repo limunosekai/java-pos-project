@@ -33,6 +33,8 @@ public class InventoryManagementController {
 	@FXML
 	private Button resetBtn;
 	@FXML
+	private Button storeName;
+	@FXML
 	private TextField searchBar;
 	@FXML
 	private TableView<String> tv;
@@ -93,5 +95,12 @@ public class InventoryManagementController {
 	@FXML
 	public void handleResetBtn(ActionEvent e) {
 		
+	}
+	
+	/**
+	 * --------------------------------------------------userName 화면 표시
+	 */
+	public void setUserName(String name) {
+		storeName.setText(name);
 	}
 }

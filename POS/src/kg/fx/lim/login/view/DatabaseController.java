@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import kg.fx.lim.model.Order;
 import kg.fx.lim.model.OrderDetail;
+import kg.fx.lim.model.OrderProductList;
 import kg.fx.lim.model.Product;
 import kg.fx.lim.model.User;
 
@@ -453,6 +454,58 @@ public class DatabaseController {
 	}
 	
 	/**
+	 * ---------------------------------------- DB에서 해당 매장의 판매된 상품리스트 전부 가져오기
+	 */
+	public ArrayList<OrderProductList> loadAllOrderProductList(int code) {
+		ResultSet rs = null;
+		ArrayList<OrderProductList> list = new ArrayList<>();
+		try {
+			String sql = "SELECT a.order_number, a.order_date, b.order_product_quantity, c.product_name, "
+					+ "c.product_price, c.product_discount_price, d.category_name FROM orders a "
+					+ "JOIN order_detail b USING(order_number) JOIN product c USING(product_code) "
+					+ "JOIN category d USING(category_code) WHERE user_code="+"'"+code+"'"+"ORDER BY order_number;";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				OrderProductList orderProductList = new OrderProductList();
+				orderProductList.setOrderNumber(rs.getInt("order_number"));
+				orderProductList.setOrderDate(rs.getString("order_date"));
+				orderProductList.setOrderProductQuantity(rs.getInt("order_product_quantity"));
+				orderProductList.setOrderProductName(rs.getString("product_name"));
+				int price = rs.getInt("product_price");
+				orderProductList.setOrderProductPrice(price);
+				int salePrice = rs.getInt("product_discount_price");
+				orderProductList.setOrderProductSalePrice(salePrice);
+				
+				// 할인율 계산
+				int discountRate = Math.round(((float)(price - salePrice) / price) * 100);
+				if (salePrice == 0) {
+					discountRate = 0;
+				}
+				orderProductList.setOrderProductDiscountRate(discountRate);
+				
+				// 할인액 계산
+				int discount = price - salePrice;
+				if(salePrice == 0) {
+					discount = 0;
+				}
+				orderProductList.setOrderProductDiscount(discount);
+				
+				// 카테고리 가져오기
+				orderProductList.setOrderProductCategory(rs.getString("category_name"));
+				
+				list.add(orderProductList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return list;
+	}
+	
+	/**
 	 * ---------------------------------------- DB에서 product_name에 맞는 데이터 가져오기
 	 */
 	public Product loadProductByName(String name) throws NullPointerException {
@@ -569,8 +622,33 @@ public class DatabaseController {
 		} finally {
 			try {if (rs != null) rs.close();} catch(Exception ex) {}
 		}
-		System.out.println(number);
 		return number;
+	}
+	
+	
+	/**
+	 * ----------------------------------------DB에서 당일 총매출 가져오기
+	 */
+	public int loadTodaySales(int code) {
+		ResultSet rs = null;
+
+		int total = 0;
+
+		try {
+			String sql = "SELECT sum(total_amount) FROM orders WHERE DATE_FORMAT(order_date, '%Y-%m-%d')=CURDATE() AND user_code="+"'"+code+"'";
+			pstm = conn.prepareStatement(sql);
+//			pstm.setInt(1, code);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				total = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return total;
 	}
 	
 	/**
