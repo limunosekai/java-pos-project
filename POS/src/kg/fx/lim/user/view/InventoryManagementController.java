@@ -98,8 +98,16 @@ public class InventoryManagementController implements Initializable {
 	@FXML
 	public void handleHomeBtn(ActionEvent e) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("userLayout.fxml"));
-			Scene scene = new Scene(root);
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("userLayout.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+//			Parent root = FXMLLoader.load(getClass().getResource("userLayout.fxml"));
+			
+			PosController controller = loader.getController();
+			controller.setUserName(getUserName());
+			
+			Scene scene = new Scene(page);
 			Stage invenStage = (Stage) homeBtn.getScene().getWindow();
 			invenStage.setScene(scene);
 			invenStage.show();
@@ -149,6 +157,14 @@ public class InventoryManagementController implements Initializable {
 	 */
 	public void setUserName(String name) {
 		storeName.setText(name);
+	}
+	
+	/**
+	 * --------------------------------------------------userName 가져오기
+	 */
+	public String getUserName() {
+		String name = storeName.getText();
+		return name;
 	}
 
 	@Override

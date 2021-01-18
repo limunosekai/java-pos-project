@@ -18,7 +18,7 @@
             <Font name="Arial Rounded MT Bold" size="12.0" />
          </font>
       </Button>
-      <LineChart fx:id="lc" layoutX="26.0" layoutY="59.0" prefHeight="250.0" prefWidth="287.0" style="-fx-background-color: #fbefdf; -fx-background-radius: 5; -fx-border-color: #305457; -fx-border-radius: 5;" title="일자별 매출현황">
+      <LineChart fx:id="lc" layoutX="26.0" layoutY="59.0" prefHeight="250.0" prefWidth="287.0" style="-fx-background-color: #fbefdf; -fx-background-radius: 5; -fx-border-color: #305457; -fx-border-radius: 5;" title="월별 매출현황">
         <xAxis>
           <CategoryAxis fx:id="day" side="BOTTOM" />
         </xAxis>
@@ -27,7 +27,7 @@
         </yAxis>
       </LineChart>
       <PieChart fx:id="pc" layoutX="327.0" layoutY="58.0" prefHeight="250.0" prefWidth="255.0" style="-fx-background-color: #fbefdf; -fx-background-radius: 5; -fx-border-color: #305457; -fx-border-radius: 5;" title="카테고리별 매출현황" />
-      <BarChart fx:id="bc" layoutX="26.0" layoutY="319.0" prefHeight="250.0" prefWidth="287.0" style="-fx-background-color: #fbefdf; -fx-background-radius: 5; -fx-border-color: #305457; -fx-border-radius: 5;" title="월 매출현황(점포별)">
+      <BarChart fx:id="bc" layoutX="26.0" layoutY="319.0" prefHeight="250.0" prefWidth="287.0" style="-fx-background-color: #fbefdf; -fx-background-radius: 5; -fx-border-color: #305457; -fx-border-radius: 5;" title="금월 매출현황(점포별)">
         <xAxis>
           <CategoryAxis fx:id="store" side="BOTTOM" />
         </xAxis>
@@ -37,7 +37,7 @@
       </BarChart>
       <AnchorPane layoutX="327.0" layoutY="319.0" prefHeight="250.0" prefWidth="255.0" style="-fx-background-color: #fbefdf; -fx-background-radius: 5; -fx-border-color: #305457; -fx-border-radius: 5;">
          <children>
-            <Label layoutX="68.0" layoutY="7.0" text="월간 BEST ITEM">
+            <Label layoutX="68.0" layoutY="7.0" text="금월 BEST ITEM">
                <font>
                   <Font size="16.0" />
                </font>

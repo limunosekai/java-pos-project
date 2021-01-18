@@ -1,6 +1,7 @@
 package kg.fx.lim.admin.view;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -32,7 +33,7 @@ public class HomePageController implements Initializable {
 	private TextField total;
 	@FXML
 	private TextField best;
-	
+	private DecimalFormat formatter = new DecimalFormat("###,###");
 	// --------------------------------------생성자
 	public HomePageController() {
 	}
@@ -64,7 +65,7 @@ public class HomePageController implements Initializable {
 			totalAmount += db.loadTheDayBeforeSales(db.loadUserCodeByName(stores.get(i)));
 		}
 		bc.getData().add(series);
-		total.setText(String.valueOf(totalAmount));
+		total.setText(String.valueOf(formatter.format(totalAmount)));
 	}
 	
 	

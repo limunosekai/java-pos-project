@@ -36,7 +36,7 @@
                   <Font name="Yj BUTGOT Light" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="total" alignment="CENTER_RIGHT" editable="false" layoutX="25.0" layoutY="63.0" prefHeight="68.0" prefWidth="203.0" promptText="0" text="10,000,000">
+            <TextField fx:id="total" editable="false" layoutX="25.0" layoutY="63.0" prefHeight="68.0" prefWidth="203.0" promptText="0" text="10,000,000">
                <font>
                   <Font name="Yj TEUNTEUN Bold" size="28.0" />
                </font>
@@ -51,7 +51,7 @@
             </Label>
             <TextField fx:id="best" editable="false" layoutX="25.0" layoutY="63.0" prefHeight="68.0" prefWidth="226.0">
                <font>
-                  <Font name="Yj TEUNTEUN Bold" size="18.0" />
+                  <Font name="Yj TEUNTEUN Bold" size="20.0" />
                </font>
             </TextField>
          </children>
