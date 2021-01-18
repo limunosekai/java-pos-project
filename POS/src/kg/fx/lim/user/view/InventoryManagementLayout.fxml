@@ -41,18 +41,17 @@
       </Button>
       <TableView fx:id="tv" layoutX="34.0" layoutY="107.0" prefHeight="466.0" prefWidth="728.0">
         <columns>
-          <TableColumn prefWidth="24.0" text="no" />
-          <TableColumn prefWidth="72.79998779296875" text="카테고리" />
-            <TableColumn prefWidth="75.0" text="상품번호" />
-            <TableColumn prefWidth="220.800048828125" text="상품명" />
-            <TableColumn prefWidth="35.199951171875" text="수량" />
-            <TableColumn prefWidth="85.59991455078125" text="정상가" />
-            <TableColumn prefWidth="84.0" text="할인가" />
-            <TableColumn prefWidth="47.199951171875" text="할인율" />
-            <TableColumn prefWidth="84.0" text="할인액" />
+          <TableColumn fx:id="tc_code" prefWidth="72.79998779296875" text="상품번호" />
+            <TableColumn fx:id="tc_category" prefWidth="75.0" text="카테고리" />
+            <TableColumn fx:id="tc_name" prefWidth="235.20001220703125" text="상품명" />
+            <TableColumn fx:id="tc_quantity" prefWidth="53.5999755859375" text="수량" />
+            <TableColumn fx:id="tc_price" prefWidth="82.39996337890625" text="정상가" />
+            <TableColumn fx:id="tc_salePrice" prefWidth="87.20001220703125" text="할인가" />
+            <TableColumn fx:id="tc_discountRate" prefWidth="42.40008544921875" text="할인율" />
+            <TableColumn fx:id="tc_discount" prefWidth="78.4000244140625" text="할인액" />
         </columns>
       </TableView>
-      <TextField fx:id="searchBar" layoutX="34.0" layoutY="74.0" prefHeight="22.0" prefWidth="211.0" promptText="검색어를 입력하세요" />
+      <TextField fx:id="searchBar" layoutX="34.0" layoutY="74.0" prefHeight="22.0" prefWidth="211.0" promptText="검색하실 상품명을 입력하세요" />
       <Button fx:id="searchBtn" focusTraversable="false" layoutX="254.0" layoutY="74.0" mnemonicParsing="false" onAction="#handleSearchBtn" prefHeight="23.0" prefWidth="53.0" text="검색">
          <font>
             <Font name="Yj BUTGOT Light" size="12.0" />

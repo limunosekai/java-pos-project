@@ -149,12 +149,10 @@ public class DatabaseController {
 			e.printStackTrace();
 		} finally {
 			try {if (rs != null) rs.close();} catch(Exception ex) {}
-			try {if (pstm != null) pstm.close();} catch(Exception ex) {}
-			try {if (conn != null) conn.close();} catch(Exception ex) {}
 		}
 		return userNames;
 	}
-	
+
 	/**
 	 * ----------------------------------------DB에서 product_name 모두 반환
 	 */
@@ -454,6 +452,55 @@ public class DatabaseController {
 	}
 	
 	/**
+	 * -------------------------------------- DB에서 사용자가 검색한 단어를 포함한 리스트 가져오기
+	 */
+	public ArrayList<Product> searchProductByName(String name) {
+		ResultSet rs = null;
+		ArrayList<Product> list = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM product WHERE product_name LIKE '%"+name+"%'";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				Product product = new Product();
+				product.setCode(rs.getInt("product_code"));
+				product.setName(rs.getString("product_name"));
+				int price = rs.getInt("product_price");
+				product.setPrice(price);
+				int salePrice = rs.getInt("product_discount_price");
+				product.setSalePrice(salePrice);
+				product.setQuantity(rs.getInt("product_quantity"));
+				
+				// 할인율 계산
+				int discountRate = Math.round(((float)(price - salePrice) / price) * 100);
+				if (salePrice == 0) {
+					discountRate = 0;
+				}
+				product.setDiscountRate(discountRate);
+				
+				// 할인액 계산
+				int discount = price - salePrice;
+				if(salePrice == 0) {
+					discount = 0;
+				}
+				product.setDiscount(discount);
+				
+				// 카테고리 가져오기
+				String category = loadCategory(rs.getInt("category_code"));
+				product.setCategory(category);
+				list.add(product);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+			try {if (pstm != null) pstm.close();} catch(Exception ex) {}
+		}
+		return list;
+	}
+	
+	/**
 	 * ---------------------------------------- DB에서 해당 매장의 판매된 상품리스트 전부 가져오기
 	 */
 	public ArrayList<OrderProductList> loadAllOrderProductList(int code) {
@@ -649,6 +696,58 @@ public class DatabaseController {
 			try {if (rs != null) rs.close();} catch(Exception ex) {}
 		}
 		return total;
+	}
+	
+	/**
+	 * ----------------------------------------DB에서 전날 총매출 가져오기
+	 */
+	public int loadTheDayBeforeSales(String name) {
+		ResultSet rs = null;
+
+		int total = 0;
+
+		try {
+			String sql = "SELECT sum(total_amount) FROM orders WHERE DATE_FORMAT(order_date, '%Y-%m-%d')=CURDATE() - INTERVAL 1 DAY AND user_name='"+name+"'";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				total = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return total;
+	}
+	
+	/**
+	 * ----------------------------------------DB에서 전날 베스트 아이템
+	 */
+	public String loadTheDayBeforeBestItem() {
+		ResultSet rs = null;
+
+		String item = "";
+
+		try {
+			String sql = "SELECT product_name, MAX(counted) FROM "
+					+ "(SELECT c.product_name, COUNT(*) as counted FROM orders a "
+					+ "JOIN order_detail b USING(order_number) JOIN product c USING(product_code) "
+					+ "WHERE DATE_FORMAT(order_date, '%Y-%m-%d')=CURDATE() - INTERVAL 1 DAY"
+					+ "GROUP BY product_name HAVING COUNT(*) > 0) AS result;";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				item = rs.getString("product_name");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return item;
 	}
 	
 	/**
