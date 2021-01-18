@@ -106,7 +106,7 @@ public class DatabaseController {
 	}
 	
 	/**
-	 * ----------------------------------------DB에서 사용자가 입력한 id에 맞는 userName 반환
+	 * ----------------------------------------DB에서 사용자 이름에 맞는 user code 반환
 	 */
 	public int loadUserCodeByName(String name) {
 		ResultSet rs = null;
@@ -699,15 +699,15 @@ public class DatabaseController {
 	}
 	
 	/**
-	 * ----------------------------------------DB에서 전날 총매출 가져오기
+	 * ----------------------------------------DB에서 해당 매장의 전날 총매출 가져오기
 	 */
-	public int loadTheDayBeforeSales(String name) {
+	public int loadTheDayBeforeSales(int code) {
 		ResultSet rs = null;
 
 		int total = 0;
 
 		try {
-			String sql = "SELECT sum(total_amount) FROM orders WHERE DATE_FORMAT(order_date, '%Y-%m-%d')=CURDATE() - INTERVAL 1 DAY AND user_name='"+name+"'";
+			String sql = "SELECT sum(total_amount) FROM orders WHERE DATE_FORMAT(order_date, '%Y-%m-%d')=CURDATE() - INTERVAL 1 DAY AND user_code="+"'"+code+"'";
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 
@@ -731,11 +731,11 @@ public class DatabaseController {
 		String item = "";
 
 		try {
-			String sql = "SELECT product_name, MAX(counted) FROM "
-					+ "(SELECT c.product_name, COUNT(*) as counted FROM orders a "
-					+ "JOIN order_detail b USING(order_number) JOIN product c USING(product_code) "
-					+ "WHERE DATE_FORMAT(order_date, '%Y-%m-%d')=CURDATE() - INTERVAL 1 DAY"
-					+ "GROUP BY product_name HAVING COUNT(*) > 0) AS result;";
+			String sql = "SELECT product_name FROM (SELECT c.product_name, COUNT(*) AS counted "
+					+ "FROM orders a JOIN order_detail b USING(order_number) "
+					+ "JOIN product c USING(product_code) "
+					+ "WHERE DATE_FORMAT(order_date, '%Y-%m-%d')=CURDATE() - INTERVAL 1 DAY "
+					+ "GROUP BY product_name HAVING COUNT(*) > 0) AS result ORDER BY counted desc LIMIT 1";
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
 
@@ -751,7 +751,42 @@ public class DatabaseController {
 	}
 	
 	/**
-	 * ----------------------------------------DB에서 해당 매장의 월간 총매출 가져오기
+	 * ----------------------------------------DB에서 월간 베스트 아이템 가져오기
+	 */
+	public String loadMonthlyBestItem() {
+		ResultSet rs = null;
+
+		String item = "";
+
+		try {
+			String sql = "SELECT product_name FROM (SELECT c.product_name, COUNT(*) "
+					+ "as counted FROM orders a JOIN order_detail b USING(order_number) "
+					+ "JOIN product c USING(product_code) WHERE order_date BETWEEN DATE_ADD(NOW(), "
+					+ "INTERVAL - 1 MONTH) AND NOW() GROUP BY product_name HAVING COUNT(*) > 0) "
+					+ "AS result ORDER BY counted desc LIMIT 1;";
+			
+//			String sql = "SELECT product_name FROM (SELECT c.product_name, COUNT(*) AS counted "
+//					+ "FROM orders a JOIN order_detail b USING(order_number) "
+//					+ "JOIN product c USING(product_code) "
+//					+ "WHERE DATE_FORMAT(order_date, '%Y-%m-%d')=CURDATE() - INTERVAL 1 MONTH "
+//					+ "GROUP BY product_name HAVING COUNT(*) > 0) AS result ORDER BY counted desc LIMIT 1";
+			
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				item = rs.getString("product_name");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return item;
+	}
+	
+	/**
+	 * ----------------------------------------DB에서 해당 매장의 월별 총매출 전부 가져오기
 	 */
 	public ArrayList<Integer> loadMonthlySales(int code) {
 		ResultSet rs = null;
@@ -765,6 +800,81 @@ public class DatabaseController {
 
 			while (rs.next()) {
 				total.add(rs.getInt("sum(total_amount)"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return total;
+	}
+	
+	/**
+	 * ----------------------------------------DB에서 해당 매장의 한달간 총매출 가져오기
+	 */
+	public int loadForAMonthSales(int code) {
+		ResultSet rs = null;
+
+		int total = 0; 
+
+		try {
+			String sql = "SELECT sum(total_amount) FROM orders "
+					+ "WHERE order_date BETWEEN DATE_ADD(NOW(), INTERVAL - 1 MONTH) AND NOW() AND user_code='"+code+"'";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				total = rs.getInt("sum(total_amount)");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return total;
+	}
+	
+	/**
+	 * ----------------------------------------DB에서 월별 전체 총매출액 가져오기
+	 */
+	public ArrayList<Integer> loadForAMonthTotalSales() {
+		ResultSet rs = null;
+
+		ArrayList<Integer> total = new ArrayList<>(); 
+
+		try {
+			String sql =  "SELECT MONTH(order_date) AS m, sum(total_amount) FROM orders GROUP BY m";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				total.add(rs.getInt("sum(total_amount)"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if (rs != null) rs.close();} catch(Exception ex) {}
+		}
+		return total;
+	}
+
+	/**
+	 * ----------------------------------------DB에서 해당 카테고리의 총매출 가져오기
+	 */
+	public int loadCategorySales(String category) {
+		ResultSet rs = null;
+
+		int total = 0;
+
+		try {
+			String sql = " SELECT sum(product_price) FROM order_detail "
+					+ "JOIN product USING(product_code) JOIN category USING(category_code) "
+					+ "WHERE category_name='"+category+"'";
+			pstm = conn.prepareStatement(sql);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				total = rs.getInt(1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -149,9 +149,11 @@ public class SalesManagementController implements Initializable {
 		XYChart.Series<String, Integer> series = new XYChart.Series<>();
 		series.setName("monthly");
 		// 월별로 XYChart.Data 객체를 만들어 series에 추가
-		for(int i=0; i< months.length; i++) {
-			series.getData().add(new XYChart.Data<>(monthNames.get(i), db.loadMonthlySales(code).get(i)));
-		}
+		try {
+			for(int i=0; i< months.length; i++) {
+				series.getData().add(new XYChart.Data<>(monthNames.get(i), db.loadMonthlySales(code).get(i)));
+			}
+		} catch (IndexOutOfBoundsException e) {}
 		lc.getData().add(series);
 	}
 	

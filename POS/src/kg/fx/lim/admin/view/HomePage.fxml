@@ -18,7 +18,7 @@
       </Button>
       <BarChart fx:id="bc" layoutX="34.0" layoutY="72.0" prefHeight="278.0" prefWidth="538.0" style="-fx-background-color: #fbefdf; -fx-background-radius: 5;" title="작일 매출 현황(점포별)">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis fx:id="store" side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
@@ -49,9 +49,9 @@
                   <Font name="Yj BUTGOT Light" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="best" alignment="CENTER" editable="false" layoutX="25.0" layoutY="63.0" prefHeight="68.0" prefWidth="226.0" promptText="0" text="마리오카트 8">
+            <TextField fx:id="best" editable="false" layoutX="25.0" layoutY="63.0" prefHeight="68.0" prefWidth="226.0">
                <font>
-                  <Font name="Yj TEUNTEUN Bold" size="24.0" />
+                  <Font name="Yj TEUNTEUN Bold" size="18.0" />
                </font>
             </TextField>
          </children>
