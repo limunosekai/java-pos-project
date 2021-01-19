@@ -1,8 +1,19 @@
 package kg.fx.lim.admin.view;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,6 +74,8 @@ public class InventoryManagementController implements Initializable{
 	private Button editBtn;
 	@FXML
 	private Button deleteBtn;
+	@FXML
+	private Button saveBtn;
 	@FXML
 	private ChoiceBox<String> category;
 	private int result = 0;
@@ -230,6 +243,88 @@ public class InventoryManagementController implements Initializable{
 			productSalePrice.setText(String.valueOf(product.getSalePrice()));
 		} catch (IndexOutOfBoundsException e) {
 			alertFail("영역선택 범위초과", "리스트의 값을 선택하세요.");
+		}
+	}
+	
+	/**
+	 * ------------------------------------ 엑셀 저장 버튼
+	 */
+	public void saveAsExcel() {
+		// 저장할 파일 경로
+		String path = "C://myProject//myJava//";
+		DatabaseController db = new DatabaseController();
+		ArrayList<Product> productList = db.loadAllProductList();
+		FileOutputStream fos = null;
+		XSSFWorkbook xw = null;
+		
+		try {
+			File file = new File(path + "재고목록.xlsx");
+			fos = new FileOutputStream(file);
+			xw = new XSSFWorkbook();
+			
+			// 타이틀 폰트
+			XSSFFont titleFont = xw.createFont();
+			titleFont.setFontHeightInPoints((short)18);
+			titleFont.setBold(true);
+			
+			// 내용 스타일
+			CellStyle titleStyle = xw.createCellStyle();
+			titleStyle.setAlignment(HorizontalAlignment.CENTER);
+			titleStyle.setFont(titleFont);
+			
+			// 바디 스타일
+			CellStyle bodyStyle = xw.createCellStyle();
+			bodyStyle.setAlignment(HorizontalAlignment.CENTER);
+			
+			// 시트 생성
+			XSSFSheet sheet = xw.createSheet("재고 목록");
+			XSSFRow curRow;
+			
+			// 행 개수
+			int row = productList.size();
+			Cell cell = null;
+			
+			// 타이틀 생성
+			curRow = sheet.createRow(0);
+			cell = curRow.createCell(0);
+			cell.setCellValue("재고 목록");
+			cell.setCellStyle(titleStyle);
+			
+			// 바디
+			for(int i=0; i<row; i++) {
+				curRow = sheet.createRow(i+1); // 행 생성
+				cell = curRow.createCell(0);
+				cell.setCellValue(productList.get(i).getCode());
+				
+				cell = curRow.createCell(1);
+				cell.setCellValue(productList.get(i).getCategory());
+				
+				cell = curRow.createCell(2);
+				cell.setCellValue(productList.get(i).getName());
+				
+				cell = curRow.createCell(3);
+				cell.setCellValue(productList.get(i).getQuantity());
+				
+				cell = curRow.createCell(4);
+				cell.setCellValue(productList.get(i).getPrice());
+				
+				cell = curRow.createCell(5);
+				cell.setCellValue(productList.get(i).getSalePrice());
+				
+				cell = curRow.createCell(6);
+				cell.setCellValue(productList.get(i).getDiscountRate());
+				
+				cell = curRow.createCell(7);
+				cell.setCellValue(productList.get(i).getDiscount());	
+			}
+			xw.write(fos);
+			alertOk("엑셀 저장 성공", "엑셀 저장에 성공하였습니다.");
+		} catch(IOException e) {
+			e.printStackTrace();
+			alertFail("엑셀 저장 실패","엑셀 저장에 실패하였습니다.");
+		} finally {
+			try {if(fos != null) fos.close();} catch(IOException e) {}
+			try {if(xw != null) fos.close();} catch(IOException e) {}
 		}
 	}
 	

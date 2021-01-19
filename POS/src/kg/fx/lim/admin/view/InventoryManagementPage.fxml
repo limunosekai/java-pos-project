@@ -7,6 +7,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -98,5 +100,17 @@
                </cursor>
             </Button>
          </children></AnchorPane>
+      <Button fx:id="saveBtn" layoutX="480.0" layoutY="21.0" mnemonicParsing="false" onAction="#saveAsExcel" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" textFill="#fbefdf">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../login/image/save.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
