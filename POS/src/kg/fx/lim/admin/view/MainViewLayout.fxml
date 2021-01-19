@@ -20,7 +20,7 @@
                <children>
                   <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../login/image/logo.png" />
+                        <Image url="@../../common/image/logo.png" />
                      </image>
                      <HBox.margin>
                         <Insets right="5.0" />
@@ -80,12 +80,30 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Button fx:id="chattingBtn" mnemonicParsing="false" onAction="#handleChattingBtn" prefHeight="34.0" prefWidth="41.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" textFill="#d5d5d5">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <VBox.margin>
+                  <Insets left="72.0" top="215.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="65.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../common/image/chat.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#handleLogout" prefHeight="28.0" prefWidth="78.0" style="-fx-background-color: #305457; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;" text="Logout" textFill="#d5d5d5">
                <font>
                   <Font name="Arial Rounded MT Bold" size="15.0" />
                </font>
                <VBox.margin>
-                  <Insets left="55.0" top="260.0" />
+                  <Insets left="55.0" top="15.0" />
                </VBox.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />

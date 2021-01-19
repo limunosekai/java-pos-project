@@ -13,7 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import kg.fx.lim.login.view.DatabaseController;
+import kg.fx.lim.common.view.DatabaseController;
 
 public class AddProductDialogController implements Initializable{
 	// ------------------------------------------멤버필드

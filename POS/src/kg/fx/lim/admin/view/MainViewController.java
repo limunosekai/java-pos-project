@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import kg.fx.lim.MainApp;
-import kg.fx.lim.login.view.DatabaseController;
+import kg.fx.lim.common.view.DatabaseController;
 
 /**
 ---------------------------------------------------------------------------
@@ -42,6 +42,8 @@ public class MainViewController {
 	private Button logoutBtn;
 	@FXML
 	private Button homeBtn;
+	@FXML
+	private Button chattingBtn;
 	@FXML
 	private Label totalAmount;
 	@FXML
@@ -95,6 +97,14 @@ public class MainViewController {
 	}
 	
 	/**
+	 * -----------------------------------------채팅 버튼
+	 */
+	@FXML
+	public void handleChattingBtn(ActionEvent e) {
+		loadPage("ChattingPage");
+	}
+	
+	/**
 	 * -----------------------------------------막대그래프 데이터셋팅
 	 */
 	@FXML
@@ -121,7 +131,7 @@ public class MainViewController {
 	public void handleLogout(ActionEvent e) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("login/view/RootLayout.fxml"));					
+			loader.setLocation(MainApp.class.getResource("common/view/RootLayout.fxml"));					
 			AnchorPane rootLayout = (AnchorPane) loader.load();
 			Scene scene = new Scene(rootLayout);
 			Stage adminStage = (Stage) logoutBtn.getScene().getWindow();

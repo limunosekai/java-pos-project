@@ -1,4 +1,4 @@
-package kg.fx.lim.login.view;
+package kg.fx.lim.common.view;
 
 import java.io.IOException;
 import java.sql.SQLException;

@@ -29,7 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kg.fx.lim.MainApp;
-import kg.fx.lim.login.view.DatabaseController;
+import kg.fx.lim.common.view.DatabaseController;
 import kg.fx.lim.model.Order;
 import kg.fx.lim.model.OrderDetail;
 import kg.fx.lim.model.Product;
@@ -60,6 +60,8 @@ public class PosController implements Initializable {
 	private Button payBtn;
 	@FXML
 	private Button methodBtn;
+	@FXML
+	private Button chattingBtn;
 	@FXML
 	private Label userName;
 	@FXML
@@ -114,7 +116,7 @@ public class PosController implements Initializable {
 		
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("login/view/RootLayout.fxml"));					
+			loader.setLocation(MainApp.class.getResource("common/view/RootLayout.fxml"));					
 			AnchorPane rootLayout = (AnchorPane) loader.load();
 			Scene scene = new Scene(rootLayout);
 			Stage posStage = (Stage) logoutBtn.getScene().getWindow();
@@ -140,7 +142,7 @@ public class PosController implements Initializable {
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("추가");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 			
@@ -267,6 +269,31 @@ public class PosController implements Initializable {
 	}
 	
 	/**
+	 * -------------------------------------------------채팅 버튼
+	 */
+	@FXML
+	public void handleChattingBtn() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("ChattingDialog.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("채팅");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			ChattingController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			
+			dialogStage.showAndWait();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+	
+	/**
 	 * --------------------------------------------------결제방법 버튼
 	 */
 	@FXML
@@ -278,7 +305,7 @@ public class PosController implements Initializable {
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("결제");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 			

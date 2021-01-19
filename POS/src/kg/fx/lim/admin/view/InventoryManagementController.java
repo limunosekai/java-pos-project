@@ -27,7 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import kg.fx.lim.login.view.DatabaseController;
+import kg.fx.lim.common.view.DatabaseController;
 import kg.fx.lim.model.Product;
 
 /**
@@ -252,11 +252,13 @@ public class InventoryManagementController implements Initializable{
 	public void saveAsExcel() {
 		// 저장할 파일 경로
 		String path = "C://myProject//myJava//";
-		DatabaseController db = new DatabaseController();
-		ArrayList<Product> productList = db.loadAllProductList();
 		FileOutputStream fos = null;
 		XSSFWorkbook xw = null;
 		
+		// DB에서 목록 받어오기
+		DatabaseController db = new DatabaseController();
+		ArrayList<Product> productList = db.loadAllProductList();
+				
 		try {
 			File file = new File(path + "재고목록.xlsx");
 			fos = new FileOutputStream(file);

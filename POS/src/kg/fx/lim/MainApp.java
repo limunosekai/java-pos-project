@@ -7,7 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import kg.fx.lim.login.view.LoginController;
+import kg.fx.lim.common.view.LoginController;
+import kg.fx.lim.common.view.MainServer;
 
 /**
  * ---------------------------------------------------------------------------
@@ -33,6 +34,8 @@ public class MainApp extends Application {
 		this.primaryStage.setTitle("Login");
 
 		initRootLayout();
+		ServerThread thread = new ServerThread();
+		thread.start();
 	}
 
 	/**
@@ -42,7 +45,7 @@ public class MainApp extends Application {
 		try {
 			// FXML에서 상위 레이아웃을 가져옴
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("login/view/RootLayout.fxml"));
+			loader.setLocation(MainApp.class.getResource("common/view/RootLayout.fxml"));
 			rootLayout = (AnchorPane) loader.load();
 
 			// 상위 레이아웃을 포함하는 scene을 stage에 세팅

@@ -48,7 +48,7 @@ public class PaymentDialogController {
 			
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("결제 금액 입력");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 			

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #3d6c6f;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kg.fx.lim.login.view.LoginController">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #3d6c6f;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kg.fx.lim.common.view.LoginController">
    <children>
       <AnchorPane layoutX="33.0" layoutY="20.0" prefHeight="463.0" prefWidth="533.0" style="-fx-border-color: #d5d5d5;" />
       <TextField fx:id="userNameField" layoutX="234.0" layoutY="222.0" prefHeight="38.0" prefWidth="190.0" promptText="Enter your Username" style="-fx-background-color: #3d6c6f; -fx-border-radius: 5; -fx-border-color: #ffffff; -fx-text-fill: #ffffff;">

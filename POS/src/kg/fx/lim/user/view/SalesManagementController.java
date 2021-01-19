@@ -15,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -29,7 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import kg.fx.lim.MainApp;
-import kg.fx.lim.login.view.DatabaseController;
+import kg.fx.lim.common.view.DatabaseController;
 import kg.fx.lim.model.OrderProductList;
 
 /**
@@ -89,7 +88,7 @@ public class SalesManagementController implements Initializable {
 	public void handleLogoutBtn(ActionEvent e) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("login/view/RootLayout.fxml"));					
+			loader.setLocation(MainApp.class.getResource("common/view/RootLayout.fxml"));					
 			AnchorPane rootLayout = (AnchorPane) loader.load();
 			Scene scene = new Scene(rootLayout);
 			Stage salesStage = (Stage) logoutBtn.getScene().getWindow();
