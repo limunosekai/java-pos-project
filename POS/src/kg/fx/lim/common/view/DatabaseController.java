@@ -34,10 +34,6 @@ public class DatabaseController {
 	PreparedStatement pstm = null;
 
 	// ---------------------------------------------------생성자
-
-	/**
-	 * ---------------------------------------------------DB 연동
-	 */
 	public DatabaseController() {
 		try {
 			Class.forName(JDBC_DRIVER);

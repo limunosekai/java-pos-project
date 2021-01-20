@@ -4,17 +4,22 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+import kg.fx.lim.model.Protocol;
+
 public class MainServerThread extends Thread {
+	// ------------------------------------멤버 필드
 	private Socket socket;
 	private BufferedReader in;
 	private PrintWriter out;
 	private ArrayList<MainServerThread> list;
+	private String userId;
 	
-	public MainServerThread(ArrayList<MainServerThread> list, Socket socket) {
+	// ------------------------------------생성자
+	public MainServerThread(Socket socket) {
 		this.socket = socket;
-		this.list = list;
 	}
 	
+	// ------------------------------------메소드
 	@Override
 	public synchronized void run() {
 		try {
@@ -22,7 +27,20 @@ public class MainServerThread extends Thread {
 			out = new PrintWriter(socket.getOutputStream(),true);
 			while(true) {
 				String msg = in.readLine();
-				broadcast(msg);
+				String[] words = msg.split("::");
+				if(words[0].equals(Protocol.ENTER)) {
+					userId = words[1];
+					msg = "** "+userId+" 님이 입장했습니다. **";
+					broadcast(msg);
+				} else if(words[0].equals(Protocol.SEND_MESSAGE)) {
+					msg = "["+words[1]+"] : "+words[2];
+					broadcast(msg);
+				} else if(words[0].equals(Protocol.SEND_SECRET_MESSAGE)) {
+					userId = words[1];
+					String receiver = words[2];
+					msg = "<<"+words[1]+">> : "+words[3];
+					sendSecretMessage(msg,userId,receiver);
+				}
 			}
 		} catch(IOException e) {
 			list.remove(this);
@@ -35,6 +53,17 @@ public class MainServerThread extends Thread {
 		}
 	}
 	
+	public void sendSecretMessage(String msg,String userId,String receiver) throws IOException {
+		for(MainServerThread t : list) {
+			if(t.userId.equals(receiver)) {
+				t.sendMsg(msg);
+			}
+			if(t.userId.equals(userId)) {
+				t.sendMsg(msg);
+			}
+		}
+	}
+
 	public void broadcast(String msg) throws IOException{
 		for(MainServerThread t : list) {
 			t.sendMsg(msg);
@@ -43,5 +72,9 @@ public class MainServerThread extends Thread {
 	
 	public void sendMsg(String msg) throws IOException {
 		out.println(msg);
+	}
+	
+	public void setList(ArrayList<MainServerThread> list) {
+		this.list = list;
 	}
 }

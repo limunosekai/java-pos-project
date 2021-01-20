@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="609.0" style="-fx-background-color: #3d6c6f;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="kg.fx.lim.admin.view.ChattingController">
    <children>
-      <TextField fx:id="tf" alignment="CENTER_RIGHT" layoutX="147.0" layoutY="516.0" onAction="#handleSend" prefHeight="45.0" prefWidth="314.0" promptText="메세지를 입력하세요">
+      <TextField fx:id="tf" layoutX="147.0" layoutY="516.0" onAction="#handleSend" prefHeight="45.0" prefWidth="314.0" promptText="메세지를 입력하세요">
          <font>
             <Font name="Yj BUTGOT Light" size="16.0" />
          </font></TextField>
@@ -33,11 +33,11 @@
             <Image url="@../../common/image/pngegg.png" />
          </image>
       </ImageView>
-      <ChoiceBox layoutX="28.0" layoutY="516.0" prefHeight="46.0" prefWidth="106.0">
+      <ChoiceBox fx:id="choice" layoutX="28.0" layoutY="516.0" prefHeight="46.0" prefWidth="106.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ChoiceBox>
-      <Button layoutX="474.0" layoutY="516.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="106.0" style="-fx-border-color: #fbefdf; -fx-border-radius: 5; -fx-background-color: #305457; -fx-background-radius: 5;" text="보내기" textFill="#fbefdf">
+      <Button fx:id="sendBtn" layoutX="474.0" layoutY="516.0" mnemonicParsing="false" onAction="#handleSendBtn" prefHeight="46.0" prefWidth="106.0" style="-fx-border-color: #fbefdf; -fx-border-radius: 5; -fx-background-color: #305457; -fx-background-radius: 5;" text="보내기" textFill="#fbefdf">
          <font>
             <Font name="Yj TEUNTEUN Bold" size="18.0" />
          </font>

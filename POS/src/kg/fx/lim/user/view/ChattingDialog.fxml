@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,31 +18,39 @@
          <font>
             <Font name="Yj BUTGOT Light" size="14.0" />
          </font></TextField>
-      <TextArea fx:id="ta" editable="false" layoutX="21.0" layoutY="22.0" prefHeight="395.0" prefWidth="408.0">
+      <TextArea fx:id="ta" editable="false" layoutX="21.0" layoutY="52.0" prefHeight="365.0" prefWidth="408.0">
          <font>
             <Font name="Yj BUTGOT Light" size="14.0" />
          </font>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor></TextArea>
-      <Button layoutX="358.0" layoutY="435.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="72.0" style="-fx-background-color: #bf3f27; -fx-background-radius: 5;" text="보내기" textFill="#fbefdf">
+      <Button fx:id="sendBtn" layoutX="358.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleSendBtn" prefHeight="42.0" prefWidth="72.0" style="-fx-background-color: #bf3f27; -fx-background-radius: 5;" text="보내기" textFill="#fbefdf">
          <font>
             <Font name="Yj TEUNTEUN Bold" size="14.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="20.0" layoutY="436.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="45.0" style="-fx-background-color: #3d6c6f; -fx-background-radius: 5; -fx-border-color: #fbefdf; -fx-border-radius: 5;">
+      <ToggleButton fx:id="tb" contentDisplay="CENTER" layoutX="21.0" layoutY="436.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="48.0">
          <graphic>
-            <ImageView fitHeight="49.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="47.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../common/image/lock.png" />
+                  <Image url="@../../common/image/lock_green.png" />
                </image>
             </ImageView>
          </graphic>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
-      </Button>
+      </ToggleButton>
+      <Label fx:id="userName" layoutX="21.0" layoutY="14.0" style="-fx-border-color: #fbefdf; -fx-border-radius: 5; -fx-background-color: #305457; -fx-background-radius: 5;" text="압구정점" textFill="#fbefdf">
+         <font>
+            <Font name="Yj BUTGOT Light" size="15.0" />
+         </font>
+         <padding>
+            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+         </padding>
+      </Label>
    </children>
 </AnchorPane>

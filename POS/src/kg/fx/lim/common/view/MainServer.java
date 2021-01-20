@@ -11,7 +11,7 @@ public class MainServer {
 	// 생성자
 	public MainServer() {
 		try {
-			ss = new ServerSocket(5003);
+			ss = new ServerSocket(5004);
 			System.out.println("서버 대기중");
 			while(true) {
 				Socket socket = ss.accept();
@@ -19,9 +19,10 @@ public class MainServer {
 				String name = ip.getHostName();
 				System.out.println(name+" 접속");
 				// 스레드 객체 생성
-				MainServerThread t = new MainServerThread(list, socket);
-				t.start();
+				MainServerThread t = new MainServerThread(socket);
 				list.add(t);
+				t.setList(list);
+				t.start();
 			}
 		} catch(IOException e) {
 			System.out.println(e.getMessage());

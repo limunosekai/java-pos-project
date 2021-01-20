@@ -8,11 +8,18 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import kg.fx.lim.model.Protocol;
 
 public class ChattingController implements Runnable, Initializable {
 	// -----------------------------------멤버필드
@@ -23,9 +30,16 @@ public class ChattingController implements Runnable, Initializable {
 	private TextField tf;
 	@FXML
 	private TextArea ta;
+	@FXML
+	private ToggleButton tb;
+	@FXML
+	private Button sendBtn;
+	@FXML
+	private Label userName;
 	private Stage dialogStage;
 	private String getMsg;
 	private String sendMsg;
+	private String id;
 	// -----------------------------------생성자
 	public ChattingController() {	
 	}
@@ -34,38 +48,94 @@ public class ChattingController implements Runnable, Initializable {
 	@Override
 	public void run() {
 		try {
-			while((getMsg = in.readLine()) != null) {
+			while(true) {
+				getMsg = in.readLine();
 				ta.appendText(getMsg + "\n");			
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * -------------------------------------초기화
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		tf.requestFocus();
 		try {
-			socket = new Socket("localhost", 5003);
+			socket = new Socket("localhost", 5004);
 			System.out.println("서버 접속 성공");
 			
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			out = new PrintWriter(socket.getOutputStream(),true);
 		} catch(IOException e) {
-			e.printStackTrace();
+			Alert fail = new Alert(AlertType.ERROR);
+			fail.setTitle("연결 실패");
+			fail.setHeaderText("서버 연결 실패");
+			fail.setContentText("서버에 연결할 수 없습니다.");
+			fail.showAndWait();
+			Platform.exit();
 		}
 		
 		Thread thread = new Thread(this);
 		thread.start();
 	}
 	
+	/**
+	 * -------------------------------------보내기 버튼
+	 */
+	@FXML
+	public void handleSendBtn() {
+		handleSend();
+	}
+	
+	/**
+	 * -------------------------------------보내기 메소드
+	 */
 	@FXML
 	public void handleSend() {
-		sendMsg = tf.getText();
-		out.println(sendMsg);
-		tf.clear();
+		id = userName.getText();
+		String receiver = "admin::";
+		if(!tb.isSelected()) {
+			// 전체 보내기
+			sendMsg = Protocol.SEND_MESSAGE+"::"+id+"::"+tf.getText();
+			out.println(sendMsg);
+			tf.clear();
+		} else {
+			// 관리자 귓속말
+			sendMsg = Protocol.SEND_SECRET_MESSAGE+"::"+id+"::"+receiver+tf.getText();
+			out.println(sendMsg);
+			tf.clear();
+		}
+	}
+	
+	/**
+	 * --------------------------------------- 채팅방 참여
+	 */
+	public void enterChat() {
+		id = getUserName();
+		out.println(Protocol.ENTER+"::"+id);
+	}
+	
+	/**
+	 * 
+	 */
+	public void setUserName(String name) {
+		userName.setText(name);
+	}
+	
+	/**
+	 * 
+	 */
+	public String getUserName() {
+		String name = userName.getText();
+		return name;
 	}
 
+	/**
+	 * -------------------------------------참조 유지
+	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
