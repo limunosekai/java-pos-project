@@ -4,6 +4,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* PayConfirmDialogController
+* @author 임성현
+---------------------------------------------------------------------------
+*/
+
 public class PayConfirmDialogController {
 	// 멤버필드
 	@FXML

@@ -10,6 +10,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* PaymentDialogController
+* @author 임성현
+---------------------------------------------------------------------------
+*/
+
 public class PaymentDialogController {
 	// 멤버필드
 	@FXML

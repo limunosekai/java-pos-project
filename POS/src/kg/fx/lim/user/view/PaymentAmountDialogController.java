@@ -7,6 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* PaymentAmountDialogController
+* @author 임성현
+---------------------------------------------------------------------------
+*/
+
 public class PaymentAmountDialogController {
 
 	// 멤버필드

@@ -17,6 +17,14 @@ import javafx.scene.control.TextField;
 import kg.fx.lim.common.view.DatabaseController;
 import kg.fx.lim.model.Protocol;
 
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* ChattingController(admin)
+* @author 임성현
+---------------------------------------------------------------------------
+*/
+
 public class ChattingController implements Runnable, Initializable {
 	// -----------------------------------멤버필드
 	private Socket socket;
@@ -36,6 +44,7 @@ public class ChattingController implements Runnable, Initializable {
 	private String getMsg;
 	private String sendMsg;
 	private String id = "admin::";
+	private boolean isStop = false;
 	// -----------------------------------생성자
 	public ChattingController() {	
 	}
@@ -44,14 +53,14 @@ public class ChattingController implements Runnable, Initializable {
 	@Override
 	public void run() {
 		try {
-			while(true) {
+			while(!isStop) {
 				getMsg = in.readLine();
 				ta.appendText(getMsg + "\n");
 				
-				if(Thread.interrupted()) {
-					closeResource();
-					break;
-				}
+//				if(Thread.interrupted()) {
+//					closeResource();
+//					break;
+//				}
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
@@ -63,12 +72,14 @@ public class ChattingController implements Runnable, Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		// choiceBox 초기화
 		DatabaseController db = new DatabaseController();
 		names.add("전체");
 		names.addAll(db.loadAllUserName());
 		choice.setItems(FXCollections.observableArrayList(names));
 		choice.getSelectionModel().selectFirst();
 		tf.requestFocus();
+		// 서버 접속 시도
 		try {
 			socket = new Socket("localhost", 5004);
 			System.out.println("서버 접속 성공");
@@ -118,14 +129,14 @@ public class ChattingController implements Runnable, Initializable {
 	}
 	
 	/**
-	 * --------------------------------------스레드 종료
+	 * --------------------------------------나가기 버튼
 	 */
 	@FXML
 	public void handleExitBtn() {
 		sendMsg = Protocol.EXIT+"::"+id;
 		out.println(sendMsg);
 		ta.appendText("재입장을 하시려면 채팅버튼을 눌러주세요.\n");
-		Thread.interrupted();
+		isStop = true;
 	}
 	
 	/**

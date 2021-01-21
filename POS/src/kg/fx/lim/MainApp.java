@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import kg.fx.lim.common.view.LoginController;
-import kg.fx.lim.common.view.MainServer;
 
 /**
  * ---------------------------------------------------------------------------

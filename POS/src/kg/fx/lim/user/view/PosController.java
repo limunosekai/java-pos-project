@@ -278,12 +278,14 @@ public class PosController implements Initializable {
 			loader.setLocation(getClass().getResource("ChattingDialog.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			
+			// 채팅창 다이얼로그 생성
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("채팅");
 			dialogStage.initModality(Modality.WINDOW_MODAL);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 			
+			// 다이얼로그 컨트롤러 배치
 			ChattingController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setUserName(getUserName());
@@ -305,6 +307,7 @@ public class PosController implements Initializable {
 			loader.setLocation(getClass().getResource("PaymentDialog.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			
+			// 결제방법 다이얼로그창 생성
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("결제");
 			dialogStage.initModality(Modality.APPLICATION_MODAL);
@@ -370,6 +373,7 @@ public class PosController implements Initializable {
 			loader.setLocation(getClass().getResource("PayConfirmDialog.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			
+			// 결제확인 다이얼로그창 생성
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("결제 확인");
 			dialogStage.initModality(Modality.WINDOW_MODAL);

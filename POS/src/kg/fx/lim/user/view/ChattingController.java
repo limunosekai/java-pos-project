@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -20,8 +19,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import kg.fx.lim.model.Protocol;
+
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* ChattingController(User)
+* @author 임성현
+---------------------------------------------------------------------------
+*/
 
 public class ChattingController implements Runnable, Initializable {
 	// -----------------------------------멤버필드
@@ -42,6 +48,7 @@ public class ChattingController implements Runnable, Initializable {
 	private String getMsg;
 	private String sendMsg;
 	private String id;
+	private boolean isStop = false;
 	// -----------------------------------생성자
 	public ChattingController() {	
 	}
@@ -50,29 +57,30 @@ public class ChattingController implements Runnable, Initializable {
 	@Override
 	public void run() {
 		try {
-			while(true) {
+			while(!isStop) {
 				getMsg = in.readLine();
 				ta.appendText(getMsg + "\n");			
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent e) {
-				out.println(Protocol.EXIT+"::"+id);
-				Platform.exit();
-				closeResource();
-			}
-		});
+		dialogStage.setOnCloseRequest(event -> handleClose());
 	}
 	
+	private void handleClose() {
+		out.println(Protocol.EXIT+"::"+id);
+		Platform.exit();
+		closeResource();
+		isStop = true;
+	}
+
 	/**
 	 * -------------------------------------초기화
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		tf.requestFocus();
+		// 서버 접속 시도
 		try {
 			socket = new Socket("localhost", 5004);
 			System.out.println("서버 접속 성공");
@@ -141,14 +149,14 @@ public class ChattingController implements Runnable, Initializable {
 	}
 	
 	/**
-	 * 
+	 * ---------------------------------------유저이름 설정
 	 */
 	public void setUserName(String name) {
 		userName.setText(name);
 	}
 	
 	/**
-	 * 
+	 * ---------------------------------------유저이름 가져오기
 	 */
 	public String getUserName() {
 		String name = userName.getText();

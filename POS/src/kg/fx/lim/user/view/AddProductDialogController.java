@@ -15,6 +15,14 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import kg.fx.lim.common.view.DatabaseController;
 
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* AddProductDialogController
+* @author 임성현
+---------------------------------------------------------------------------
+*/
+
 public class AddProductDialogController implements Initializable{
 	// ------------------------------------------멤버필드
 	@FXML

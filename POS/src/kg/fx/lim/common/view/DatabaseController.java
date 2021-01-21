@@ -11,10 +11,10 @@ import kg.fx.lim.model.User;
 
 /**
  * ---------------------------------------------------------------------------
- * Nintendo POS ver 1.0 DatabaseController
- * 
+ * Nintendo POS ver 1.0 
+ * DatabaseController
  * @author 임성현
- *         ---------------------------------------------------------------------------
+ * ---------------------------------------------------------------------------
  */
 
 public class DatabaseController {
@@ -26,7 +26,7 @@ public class DatabaseController {
 	// DB 사용자명
 	private final String USER_NAME = "root";
 	// DB 사용자 비밀번호
-	private final String PASSWORD = "limhyn1130";
+	private final String PASSWORD = "123456";
 	// 접속할 DB의 주소
 	private final String DB_URL = "jdbc:mysql://localhost:3306/pos_db?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
 

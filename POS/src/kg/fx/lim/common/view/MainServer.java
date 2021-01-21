@@ -4,11 +4,20 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* MainServer
+* @author 임성현
+---------------------------------------------------------------------------
+*/
+
 public class MainServer {
+	//-----------------------------------------멤버 필드
 	private ArrayList<MainServerThread> list = new ArrayList<>();
 	private ServerSocket ss = null;
 	
-	// 생성자
+	// ----------------------------------------생성자
 	public MainServer() {
 		try {
 			ss = new ServerSocket(5004);

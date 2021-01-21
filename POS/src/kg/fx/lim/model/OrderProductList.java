@@ -1,5 +1,13 @@
 package kg.fx.lim.model;
 
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* OrderProductList
+* @author 임성현
+---------------------------------------------------------------------------
+*/
+
 public class OrderProductList {
 	// 멤버필드
 	private int orderNumber;

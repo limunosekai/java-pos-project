@@ -6,6 +6,14 @@ import java.util.ArrayList;
 
 import kg.fx.lim.model.Protocol;
 
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* MainServerThread
+* @author 임성현
+---------------------------------------------------------------------------
+*/
+
 public class MainServerThread extends Thread {
 	// ------------------------------------멤버 필드
 	private Socket socket;
@@ -45,6 +53,9 @@ public class MainServerThread extends Thread {
 					msg = "** "+userId+" 님이 퇴장했습니다. **";
 					broadcast(msg);
 					list.remove(this);
+					in.close();
+					out.close();
+					socket.close();
 				}
 			}
 		} catch(IOException e) {
@@ -67,12 +78,17 @@ public class MainServerThread extends Thread {
 				t.sendMsg(msg);
 			}
 		}
+		return;
 	}
 
 	public void broadcast(String msg) throws IOException{
+		if(list.size() == -1) {
+			return;
+		}
 		for(MainServerThread t : list) {
 			t.sendMsg(msg);
 		}
+		return;
 	}
 	
 	public void sendMsg(String msg) throws IOException {

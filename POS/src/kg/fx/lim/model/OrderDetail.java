@@ -1,5 +1,13 @@
 package kg.fx.lim.model;
 
+/**
+---------------------------------------------------------------------------
+* Nintendo POS 1.0
+* OrderDetail
+* @author 임성현
+---------------------------------------------------------------------------
+*/
+
 public class OrderDetail {
 	// 멤버필드
 	private int orderDetailNumber;
