@@ -28,7 +28,7 @@
             <Image url="@../../common/image/pngwing.com%20(2).png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="46.0" fitWidth="59.0" layoutX="504.0" layoutY="467.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="46.0" fitWidth="59.0" layoutX="504.0" layoutY="414.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../common/image/pngegg.png" />
          </image>
@@ -37,7 +37,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ChoiceBox>
-      <Button fx:id="sendBtn" layoutX="474.0" layoutY="516.0" mnemonicParsing="false" onAction="#handleSendBtn" prefHeight="46.0" prefWidth="106.0" style="-fx-border-color: #fbefdf; -fx-border-radius: 5; -fx-background-color: #305457; -fx-background-radius: 5;" text="보내기" textFill="#fbefdf">
+      <Button fx:id="sendBtn" layoutX="474.0" layoutY="463.0" mnemonicParsing="false" onAction="#handleSendBtn" prefHeight="46.0" prefWidth="106.0" style="-fx-border-color: #fbefdf; -fx-border-radius: 5; -fx-background-color: #305457; -fx-background-radius: 5;" text="보내기" textFill="#fbefdf">
          <font>
             <Font name="Yj TEUNTEUN Bold" size="18.0" />
          </font>
@@ -55,5 +55,13 @@
             <Image url="@../../common/image/break.png" />
          </image>
       </ImageView>
+      <Button fx:id="exitBtn" layoutX="474.0" layoutY="516.0" mnemonicParsing="false" onAction="#handleExitBtn" prefHeight="46.0" prefWidth="106.0" style="-fx-background-color: #bf3f27; -fx-background-radius: 5;" text="나가기" textFill="#fbefdf">
+         <font>
+            <Font name="Yj TEUNTEUN Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

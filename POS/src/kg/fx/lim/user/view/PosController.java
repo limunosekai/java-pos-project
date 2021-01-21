@@ -288,6 +288,7 @@ public class PosController implements Initializable {
 			controller.setDialogStage(dialogStage);
 			controller.setUserName(getUserName());
 			controller.enterChat();
+			
 			dialogStage.showAndWait();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

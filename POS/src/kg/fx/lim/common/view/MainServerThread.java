@@ -40,6 +40,11 @@ public class MainServerThread extends Thread {
 					String receiver = words[2];
 					msg = "<<"+words[1]+">> : "+words[3];
 					sendSecretMessage(msg,userId,receiver);
+				} else if(words[0].equals(Protocol.EXIT)) {
+					userId = words[1];
+					msg = "** "+userId+" 님이 퇴장했습니다. **";
+					broadcast(msg);
+					list.remove(this);
 				}
 			}
 		} catch(IOException e) {

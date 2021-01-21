@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -19,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import kg.fx.lim.model.Protocol;
 
 public class ChattingController implements Runnable, Initializable {
@@ -55,6 +57,14 @@ public class ChattingController implements Runnable, Initializable {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+		dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent e) {
+				out.println(Protocol.EXIT+"::"+id);
+				Platform.exit();
+				closeResource();
+			}
+		});
 	}
 	
 	/**
@@ -87,6 +97,9 @@ public class ChattingController implements Runnable, Initializable {
 	 */
 	@FXML
 	public void handleSendBtn() {
+		if(tf.getText().length() == 0 || tf.getText().equals("")){
+			return;
+		}
 		handleSend();
 	}
 	
@@ -116,6 +129,15 @@ public class ChattingController implements Runnable, Initializable {
 	public void enterChat() {
 		id = getUserName();
 		out.println(Protocol.ENTER+"::"+id);
+	}
+	
+	/**
+	 * ---------------------------------------자원 반납
+	 */
+	public void closeResource() {
+		try {if(in != null) in.close();}catch(IOException e){}
+		if(out != null) out.close();
+		try {if(socket != null)socket.close();}catch (IOException e) {}
 	}
 	
 	/**

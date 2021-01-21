@@ -29,6 +29,8 @@ public class ChattingController implements Runnable, Initializable {
 	@FXML
 	private Button sendBtn;
 	@FXML
+	private Button exitBtn;
+	@FXML
 	private ChoiceBox<String> choice;
 	private ArrayList<String> names = new ArrayList<>();
 	private String getMsg;
@@ -44,7 +46,12 @@ public class ChattingController implements Runnable, Initializable {
 		try {
 			while(true) {
 				getMsg = in.readLine();
-				ta.appendText(getMsg + "\n");			
+				ta.appendText(getMsg + "\n");
+				
+				if(Thread.interrupted()) {
+					closeResource();
+					break;
+				}
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
@@ -65,7 +72,7 @@ public class ChattingController implements Runnable, Initializable {
 		try {
 			socket = new Socket("localhost", 5004);
 			System.out.println("서버 접속 성공");
-			
+		
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			out = new PrintWriter(socket.getOutputStream(),true);
 			
@@ -87,6 +94,9 @@ public class ChattingController implements Runnable, Initializable {
 	 */
 	@FXML
 	public void handleSendBtn() {
+		if(tf.getText().length() == 0 || tf.getText().equals("")){
+			return;
+		}
 		handleSend();
 	}
 	
@@ -105,5 +115,25 @@ public class ChattingController implements Runnable, Initializable {
 			out.println(sendMsg);
 			tf.clear();
 		}
+	}
+	
+	/**
+	 * --------------------------------------스레드 종료
+	 */
+	@FXML
+	public void handleExitBtn() {
+		sendMsg = Protocol.EXIT+"::"+id;
+		out.println(sendMsg);
+		ta.appendText("재입장을 하시려면 채팅버튼을 눌러주세요.\n");
+		Thread.interrupted();
+	}
+	
+	/**
+	 * ---------------------------------------자원 반납
+	 */
+	public void closeResource() {
+		try {if(in != null) in.close();}catch(IOException e){}
+		if(out != null) out.close();
+		try {if(socket != null)socket.close();}catch (IOException e) {}
 	}
 }
