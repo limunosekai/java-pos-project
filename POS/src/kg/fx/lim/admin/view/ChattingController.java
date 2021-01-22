@@ -133,10 +133,10 @@ public class ChattingController implements Runnable, Initializable {
 	 */
 	@FXML
 	public void handleExitBtn() {
+		isStop = true;
+		ta.appendText("재입장을 하시려면 채팅버튼을 눌러주세요.\n");
 		sendMsg = Protocol.EXIT+"::"+id;
 		out.println(sendMsg);
-		ta.appendText("재입장을 하시려면 채팅버튼을 눌러주세요.\n");
-		isStop = true;
 	}
 	
 	/**

@@ -61,11 +61,7 @@ public class MainServerThread extends Thread {
 		} catch(IOException e) {
 			list.remove(this);
 			String name = socket.getInetAddress().getHostName();
-			try {
-				broadcast(name+"과의 연결이 끊어졌습니다.");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			System.out.println(name+"과의 연글 끊김");
 		}
 	}
 	

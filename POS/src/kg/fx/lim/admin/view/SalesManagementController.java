@@ -111,7 +111,4 @@ public class SalesManagementController implements Initializable {
 		showSalesReport();
 		
 	}
-	
-	
-	
 }
