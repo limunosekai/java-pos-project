@@ -59,18 +59,34 @@ public class ChattingController implements Runnable, Initializable {
 		try {
 			while(!isStop) {
 				getMsg = in.readLine();
-				ta.appendText(getMsg + "\n");			
+				// 스레드 동시성 - 작업 스레드 실행 후 UI변경 후작업
+				Platform.runLater(new Runnable() {
+				    @Override
+				    public void run(){
+				    	ta.appendText(getMsg + "\n");
+				    	dialogStage.setOnCloseRequest(event -> {
+							handleClose();
+						});
+				    	try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+				    }
+				});
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
+		} finally {
+			closeResource();
 		}
-		dialogStage.setOnCloseRequest(event -> handleClose());
 	}
 	
+	/**
+	 * --------------------------------------자원 반납
+	 */
 	private void handleClose() {
 		out.println(Protocol.EXIT+"::"+id);
-		Platform.exit();
-		closeResource();
 		isStop = true;
 	}
 
