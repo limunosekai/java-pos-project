@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -55,15 +56,23 @@ public class ChattingController implements Runnable, Initializable {
 		try {
 			while(!isStop) {
 				getMsg = in.readLine();
-				ta.appendText(getMsg + "\n");
-				
-//				if(Thread.interrupted()) {
-//					closeResource();
-//					break;
-//				}
+				// 스레드 동시성 - 작업 스레드 실행 후 UI변경 후작업
+				Platform.runLater(new Runnable() {
+				    @Override
+				    public void run(){
+				    	ta.appendText(getMsg + "\n");
+				    	try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+				    }
+				});
 			}
 		} catch(IOException e) {
 			e.printStackTrace();
+		} finally {
+			closeResource();
 		}
 	}
 	
@@ -133,18 +142,18 @@ public class ChattingController implements Runnable, Initializable {
 	 */
 	@FXML
 	public void handleExitBtn() {
+		isStop = true;
 		ta.appendText("재입장을 하시려면 채팅버튼을 눌러주세요.\n");
 		sendMsg = Protocol.EXIT+"::"+id;
 		out.println(sendMsg);
-		isStop = true;
 	}
 	
 	/**
 	 * ---------------------------------------자원 반납
 	 */
 	public void closeResource() {
-		try {if(in != null) in.close();}catch(IOException e){}
-		if(out != null) out.close();
-		try {if(socket != null)socket.close();}catch (IOException e) {}
+		try {if(in != null) in.close();}catch(Exception e){}
+		try {if(out != null) out.close();}catch(Exception e){}
+		try {if(socket != null)socket.close();}catch (Exception e) {}
 	}
 }

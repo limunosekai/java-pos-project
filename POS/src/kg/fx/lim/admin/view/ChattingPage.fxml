@@ -16,7 +16,7 @@
          <font>
             <Font name="Yj BUTGOT Light" size="16.0" />
          </font></TextField>
-      <TextArea fx:id="ta" editable="false" layoutX="43.0" layoutY="48.0" prefHeight="347.0" prefWidth="523.0">
+      <TextArea fx:id="ta" editable="false" layoutX="43.0" layoutY="48.0" prefHeight="347.0" prefWidth="523.0" promptText="&lt;&lt;! 매니저급 이외에 출입 불가입니다&gt;&gt;">
          <font>
             <Font name="Yj BUTGOT Light" size="16.0" />
          </font>
