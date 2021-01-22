@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import kg.fx.lim.common.view.DatabaseController;
+import kg.fx.lim.common.DAO.DatabaseController;
 import kg.fx.lim.model.Protocol;
 
 /**
@@ -133,10 +133,10 @@ public class ChattingController implements Runnable, Initializable {
 	 */
 	@FXML
 	public void handleExitBtn() {
-		isStop = true;
 		ta.appendText("재입장을 하시려면 채팅버튼을 눌러주세요.\n");
 		sendMsg = Protocol.EXIT+"::"+id;
 		out.println(sendMsg);
+		isStop = true;
 	}
 	
 	/**

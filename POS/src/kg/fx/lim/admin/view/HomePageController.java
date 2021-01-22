@@ -13,7 +13,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.TextField;
-import kg.fx.lim.common.view.DatabaseController;
+import kg.fx.lim.common.DAO.DatabaseController;
 
 /**
 ---------------------------------------------------------------------------

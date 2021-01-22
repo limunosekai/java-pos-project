@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import kg.fx.lim.MainApp;
+import kg.fx.lim.common.DAO.DatabaseController;
 import kg.fx.lim.user.view.PosController;
 
 /**

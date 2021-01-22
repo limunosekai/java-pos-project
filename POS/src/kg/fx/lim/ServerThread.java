@@ -1,6 +1,6 @@
 package kg.fx.lim;
 
-import kg.fx.lim.common.view.MainServer;
+import kg.fx.lim.common.server.MainServer;
 
 /**
 ---------------------------------------------------------------------------

@@ -20,7 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import kg.fx.lim.MainApp;
-import kg.fx.lim.common.view.DatabaseController;
+import kg.fx.lim.common.DAO.DatabaseController;
 import kg.fx.lim.model.Product;
 
 /**

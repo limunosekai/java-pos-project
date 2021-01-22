@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import kg.fx.lim.common.view.DatabaseController;
+import kg.fx.lim.common.DAO.DatabaseController;
 import kg.fx.lim.model.User;
 
 /**

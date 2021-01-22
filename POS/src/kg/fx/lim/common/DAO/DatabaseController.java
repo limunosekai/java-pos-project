@@ -1,4 +1,4 @@
-package kg.fx.lim.common.view;
+package kg.fx.lim.common.DAO;
 
 import java.sql.*;
 import java.util.ArrayList;

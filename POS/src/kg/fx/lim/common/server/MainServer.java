@@ -1,4 +1,4 @@
-package kg.fx.lim.common.view;
+package kg.fx.lim.common.server;
 
 import java.io.*;
 import java.net.*;

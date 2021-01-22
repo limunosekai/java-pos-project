@@ -18,7 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import kg.fx.lim.MainApp;
-import kg.fx.lim.common.view.DatabaseController;
+import kg.fx.lim.common.DAO.DatabaseController;
 
 /**
 ---------------------------------------------------------------------------

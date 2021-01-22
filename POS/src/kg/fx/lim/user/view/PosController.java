@@ -29,7 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kg.fx.lim.MainApp;
-import kg.fx.lim.common.view.DatabaseController;
+import kg.fx.lim.common.DAO.DatabaseController;
 import kg.fx.lim.model.Order;
 import kg.fx.lim.model.OrderDetail;
 import kg.fx.lim.model.Product;
